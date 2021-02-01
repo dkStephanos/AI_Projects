@@ -160,35 +160,45 @@ def uninformed_search(graph, origin, destination):
 
 
 ## -- Set up Destination Point
-destination_point = (38.889730, -77.005928) # The U.S. Capitol
-origin_point = (38.890219, -77.049560) # The Lincoln Memorial
+destination_points = [
+	(36.359595, -82.398868),	# Walmart on West Market
+	(36.342513, -82.373483),	# Target on North Roan
+	(36.320831, -82.277667), 	# Tweetsie Trail entrance
+	(36.316574, -82.352577), 	# Frieberg's German Restuarant
+	(36.301605, -82.337822), 	# Food City on South Roan
+	(36.347904, -82.400772), 	# Best Buy on Peoples Street
+]
+
+origin_point = (36.30321114344463, -83.36710826765649) # Gilbreath Hall
 origin = ox.get_nearest_node(G, origin_point)
-destination = ox.get_nearest_node(G, destination_point)
 origin_node = (origin, G.nodes[origin])
-destination_node = (destination, G.nodes[destination])
-bfs_distance = 0
-dfs_distance = 0
-lat = []
-long = []
 
-# bfs_route, lat, long, bfs_distance = breadth_first_search(G, origin_node, destination_node)
-# route_path = node_list_to_path(G, bfs_route)
-# plot_path(lat, long, origin_node, destination_node)
+for destination_point in destination_point:
+	destination = ox.get_nearest_node(G, destination_point)
+	destination_node = (destination, G.nodes[destination])
+	bfs_distance = 0
+	dfs_distance = 0
+	lat = []
+	long = []
 
-# dfs_route, lat, long, dfs_distance = depth_first_search(G, origin_node, destination_node)
-# route_path = node_list_to_path(G, dfs_route)
-plot_path(lat, long, origin_node, destination_node) # Until filled in with values, this doesn't do much.
+	# bfs_route, lat, long, bfs_distance = breadth_first_search(G, origin_node, destination_node)
+	# route_path = node_list_to_path(G, bfs_route)
+	# plot_path(lat, long, origin_node, destination_node)
 
-print("Total Route Distance (BFS):", bfs_distance)
-print("Total Route Distance (DFS):", dfs_distance)
+	# dfs_route, lat, long, dfs_distance = depth_first_search(G, origin_node, destination_node)
+	# route_path = node_list_to_path(G, dfs_route)
+	plot_path(lat, long, origin_node, destination_node) # Until filled in with values, this doesn't do much.
+
+	print("Total Route Distance (BFS):", bfs_distance)
+	print("Total Route Distance (DFS):", dfs_distance)
 
 
-# The following is example code to save your map to an HTML file.
-# route = nx.shortest_path(G, origin_node, destination_node)
-# route_map = ox.plot_route_folium(G, route)
-# filepath = 'data/graph.html'
-# route_map.save(filepath)
-# print(G.nodes(True))
-# ec = ox.plot.get_edge_colors_by_attr(G, attr='length', cmap='plasma_r')
-# fig, ax = ox.plot_graph(G, node_color='w', node_edgecolor='k', node_size=20,
-#                         edge_color=ec, edge_linewidth=2)
+	# The following is example code to save your map to an HTML file.
+	# route = nx.shortest_path(G, origin_node, destination_node)
+	# route_map = ox.plot_route_folium(G, route)
+	# filepath = 'data/graph.html'
+	# route_map.save(filepath)
+	# print(G.nodes(True))
+	# ec = ox.plot.get_edge_colors_by_attr(G, attr='length', cmap='plasma_r')
+	# fig, ax = ox.plot_graph(G, node_color='w', node_edgecolor='k', node_size=20,
+	#                         edge_color=ec, edge_linewidth=2)
