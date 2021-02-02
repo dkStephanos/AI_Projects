@@ -5,10 +5,11 @@ import plotly.graph_objects as go
 import collections
 import numpy as np
 import matplotlib.pyplot as plt
+from collections import deque
 
 ox.config(log_console=True, use_cache=True)
 
-G = ox.graph_from_address('1600 Pennsylvania Avenue, Washington, DC, USA', dist=3000, network_type='drive')
+G = ox.graph_from_address('1276 Gilbreath Drive, Johnson City, TN, USA', dist=4000, network_type='drive')
 
 ### Use this code to display a plot of the graph if desired. Note: You need to import matplotlib.pyplot as plt
 fig, ax = ox.plot_graph(G, edge_linewidth=3, node_size=0, show=False, close=False)
@@ -139,6 +140,30 @@ def depth_first_search(graph, origin, destination):
      destination is found.
     '''
     print("Depth First Search")
+    print(destination)
+    frontier = deque()
+    explored = []
+    searching = True
+
+    frontier.append(origin[0])
+
+    while searching:
+        if len(frontier) == 0:
+            return -1
+
+        current = frontier.pop()
+        explored.append(current)
+        for neighbor in graph.neighbors(current):
+            if neighbor not in frontier and neighbor not in explored:
+                if neighbor == destination[0]:
+                    explored.append(neighbor)
+                    searching = False
+                    print("success!!!")
+                    print(neighbor)
+                    print(destination)
+                    print(len(explored))
+                    break    #Success
+                frontier.append(neighbor)
 
 
 def breadth_first_search(graph, origin, destination):
@@ -161,44 +186,49 @@ def uninformed_search(graph, origin, destination):
 
 ## -- Set up Destination Point
 destination_points = [
-	(36.359595, -82.398868),	# Walmart on West Market
-	(36.342513, -82.373483),	# Target on North Roan
-	(36.320831, -82.277667), 	# Tweetsie Trail entrance
-	(36.316574, -82.352577), 	# Frieberg's German Restuarant
-	(36.301605, -82.337822), 	# Food City on South Roan
-	(36.347904, -82.400772), 	# Best Buy on Peoples Street
+    (36.359595, -82.398868),    # Walmart on West Market
+    #(36.342513, -82.373483),    # Target on North Roan
+    #(36.320831, -82.277667),    # Tweetsie Trail entrance
+    #(36.316574, -82.352577),    # Frieberg's German Restuarant
+    #36.301605, -82.337822),    # Food City on South Roan
+    #(36.347904, -82.400772),    # Best Buy on Peoples Street
 ]
 
 origin_point = (36.30321114344463, -83.36710826765649) # Gilbreath Hall
 origin = ox.get_nearest_node(G, origin_point)
 origin_node = (origin, G.nodes[origin])
+print(origin_node)
+for destination_point in destination_points:
+    destination = ox.get_nearest_node(G, destination_point)
+    destination_node = (destination, G.nodes[destination])
+    bfs_distance = 0
+    dfs_distance = 0
+    lat = []
+    long = []
 
-for destination_point in destination_point:
-	destination = ox.get_nearest_node(G, destination_point)
-	destination_node = (destination, G.nodes[destination])
-	bfs_distance = 0
-	dfs_distance = 0
-	lat = []
-	long = []
+    neighbors = G.neighbors(origin)
+    for neighbor in neighbors:
+        print(neighbor)
 
-	# bfs_route, lat, long, bfs_distance = breadth_first_search(G, origin_node, destination_node)
-	# route_path = node_list_to_path(G, bfs_route)
-	# plot_path(lat, long, origin_node, destination_node)
+    # bfs_route, lat, long, bfs_distance = breadth_first_search(G, origin_node, destination_node)
+    # route_path = node_list_to_path(G, bfs_route)
+    # plot_path(lat, long, origin_node, destination_node)
 
-	# dfs_route, lat, long, dfs_distance = depth_first_search(G, origin_node, destination_node)
-	# route_path = node_list_to_path(G, dfs_route)
-	plot_path(lat, long, origin_node, destination_node) # Until filled in with values, this doesn't do much.
+    # dfs_route, lat, long, dfs_distance = 
+    depth_first_search(G, origin_node, destination_node)
+    # route_path = node_list_to_path(G, dfs_route)
+    # plot_path(lat, long, origin_node, destination_node) # Until filled in with values, this doesn't do much.
 
-	print("Total Route Distance (BFS):", bfs_distance)
-	print("Total Route Distance (DFS):", dfs_distance)
+    # print("Total Route Distance (BFS):", bfs_distance)
+    # print("Total Route Distance (DFS):", dfs_distance)
 
 
-	# The following is example code to save your map to an HTML file.
-	# route = nx.shortest_path(G, origin_node, destination_node)
-	# route_map = ox.plot_route_folium(G, route)
-	# filepath = 'data/graph.html'
-	# route_map.save(filepath)
-	# print(G.nodes(True))
-	# ec = ox.plot.get_edge_colors_by_attr(G, attr='length', cmap='plasma_r')
-	# fig, ax = ox.plot_graph(G, node_color='w', node_edgecolor='k', node_size=20,
-	#                         edge_color=ec, edge_linewidth=2)
+    # The following is example code to save your map to an HTML file.
+    # route = nx.shortest_path(G, origin_node, destination_node)
+    # route_map = ox.plot_route_folium(G, route)
+    # filepath = 'data/graph.html'
+    # route_map.save(filepath)
+    # print(G.nodes(True))
+    # ec = ox.plot.get_edge_colors_by_attr(G, attr='length', cmap='plasma_r')
+    # fig, ax = ox.plot_graph(G, node_color='w', node_edgecolor='k', node_size=20,
+    #                         edge_color=ec, edge_linewidth=2)
