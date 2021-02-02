@@ -116,7 +116,7 @@ def plot_path(lat, long, origin_point, destination_point):
     fig.show()
 
 
-def backtrack(graph, origin, node, explored):
+def backtrack(graph, origin, end_node, explored):
     '''
     Accepts the graph, the origin and the node reached. Also accepts the list of
     explored/visited locations.
@@ -131,7 +131,19 @@ def backtrack(graph, origin, node, explored):
     '''
     print("Backtracking")
 
+    path = [origin[0]]
+    lat = [origin[1]['y']]
+    long = [origin[1]['x']]
+    for node in reversed(explored):
+        path.append(node)
+        lat.append(graph.nodes[node]['y'])
+        long.append(graph.nodes[node]['x'])
 
+    path.append(end_node[0])
+    lat.append(end_node[1]['y'])
+    long.append(end_node[1]['x'])
+
+    return [path, lat, long]
 
 def depth_first_search(graph, origin, destination):
     '''
@@ -140,7 +152,6 @@ def depth_first_search(graph, origin, destination):
      destination is found.
     '''
     print("Depth First Search")
-    print(destination)
     frontier = deque()
     explored = []
     searching = True
@@ -158,12 +169,11 @@ def depth_first_search(graph, origin, destination):
                 if neighbor == destination[0]:
                     explored.append(neighbor)
                     searching = False
-                    print("success!!!")
-                    print(neighbor)
-                    print(destination)
-                    print(len(explored))
                     break    #Success
                 frontier.append(neighbor)
+
+    return backtrack(graph, origin, destination, explored)
+
 
 
 def breadth_first_search(graph, origin, destination):
@@ -215,9 +225,9 @@ for destination_point in destination_points:
     # plot_path(lat, long, origin_node, destination_node)
 
     # dfs_route, lat, long, dfs_distance = 
-    depth_first_search(G, origin_node, destination_node)
-    # route_path = node_list_to_path(G, dfs_route)
-    # plot_path(lat, long, origin_node, destination_node) # Until filled in with values, this doesn't do much.
+    dfs_route, lat, long = depth_first_search(G, origin_node, destination_node)
+    route_path = node_list_to_path(G, dfs_route)
+    plot_path(lat, long, origin_node, destination_node) # Until filled in with values, this doesn't do much.
 
     # print("Total Route Distance (BFS):", bfs_distance)
     # print("Total Route Distance (DFS):", dfs_distance)
