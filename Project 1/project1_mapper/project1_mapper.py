@@ -6,6 +6,7 @@ import collections
 import numpy as np
 import matplotlib.pyplot as plt
 from collections import deque
+import random
 
 ox.config(log_console=True, use_cache=True)
 
@@ -238,6 +239,32 @@ def uninformed_search(graph, origin, destination):
         '''
         print("My Uninformed Search Algorithm")
 
+        frontier = deque()
+        explored = []
+        searching = True
+
+        frontier.append((origin[0], None))
+
+        while searching:
+            if len(frontier) == 0:
+                return -1
+
+            frontier_node = frontier.pop()
+            current_node = frontier_node[0]
+            previous_node = frontier_node[1]
+
+            if previous_node is not None:
+                explored.append((current_node, previous_node))
+            neighbors = list(graph.neighbors(current_node))
+            random.shuffle(neighbors)
+            for neighbor in neighbors:
+                if (neighbor, current_node) not in frontier and (neighbor, current_node) not in explored:
+                    if neighbor == destination[0]:
+                        searching = False
+                        break    #Success
+                    frontier.append((neighbor, current_node))
+
+        return backtrack(graph, origin, destination, explored)
 
 ## -- Set up Destination Point
 destination_points = [
@@ -259,17 +286,22 @@ for destination_point in destination_points:
     dfs_distance = 0
     lat = []
     long = []
-
+    
     bfs_route, lat, long, bfs_distance = breadth_first_search(G, origin_node, destination_node)
     route_path = node_list_to_path(G, bfs_route)
     plot_path(lat, long, origin_node, destination_node)
 
     dfs_route, lat, long, dfs_distance = depth_first_search(G, origin_node, destination_node)
     route_path = node_list_to_path(G, dfs_route)
-    plot_path(lat, long, origin_node, destination_node) # Until filled in with values, this doesn't do much.
-
-    # print("Total Route Distance (BFS):", bfs_distance)
+    plot_path(lat, long, origin_node, destination_node)
+    
+    uninformed_route, lat, long, uninformed_distance = uninformed_search(G, origin_node, destination_node)
+    route_path = node_list_to_path(G, uninformed_route)
+    plot_path(lat, long, origin_node, destination_node)
+    
+    print("Total Route Distance (BFS):", bfs_distance)
     print("Total Route Distance (DFS):", dfs_distance)
+    print("Total Route Distance (Random-Depth):", uninformed_distance)
 
 
     # The following is example code to save your map to an HTML file.
