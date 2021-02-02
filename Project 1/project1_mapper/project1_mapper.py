@@ -204,6 +204,31 @@ def breadth_first_search(graph, origin, destination):
     '''
     print("Breadth First Search")
 
+    frontier = deque()
+    explored = []
+    searching = True
+
+    frontier.appendleft((origin[0], None))
+
+    while searching:
+        if len(frontier) == 0:
+            return -1
+
+        frontier_node = frontier.pop()
+        current_node = frontier_node[0]
+        previous_node = frontier_node[1]
+
+        if previous_node is not None:
+            explored.append((current_node, previous_node))
+        for neighbor in graph.neighbors(current_node):
+            if (neighbor, current_node) not in frontier and (neighbor, current_node) not in explored:
+                if neighbor == destination[0]:
+                    searching = False
+                    break    #Success
+                frontier.appendleft((neighbor, current_node))
+
+    return backtrack(graph, origin, destination, explored)
+
 
 def uninformed_search(graph, origin, destination):
         '''
@@ -235,11 +260,10 @@ for destination_point in destination_points:
     lat = []
     long = []
 
-    # bfs_route, lat, long, bfs_distance = breadth_first_search(G, origin_node, destination_node)
-    # route_path = node_list_to_path(G, bfs_route)
-    # plot_path(lat, long, origin_node, destination_node)
+    bfs_route, lat, long, bfs_distance = breadth_first_search(G, origin_node, destination_node)
+    route_path = node_list_to_path(G, bfs_route)
+    plot_path(lat, long, origin_node, destination_node)
 
-    # dfs_route, lat, long, dfs_distance = 
     dfs_route, lat, long, dfs_distance = depth_first_search(G, origin_node, destination_node)
     route_path = node_list_to_path(G, dfs_route)
     plot_path(lat, long, origin_node, destination_node) # Until filled in with values, this doesn't do much.
