@@ -131,19 +131,35 @@ def backtrack(graph, origin, end_node, explored):
     '''
     print("Backtracking")
 
-    path = [origin[0]]
     lat = [origin[1]['y']]
     long = [origin[1]['x']]
-    for node in reversed(explored):
-        path.append(node)
-        lat.append(graph.nodes[node]['y'])
-        long.append(graph.nodes[node]['x'])
+    total_cost = 0
+    path = [end_node[0]]
+    node = explored[-1]
 
-    path.append(end_node[0])
-    lat.append(end_node[1]['y'])
-    long.append(end_node[1]['x'])
+    while True:
+        if node[0] == origin[0]:
+            break
+        path.append(node[0])
+        lat.append(graph.nodes[node[0]]['y'])
+        long.append(graph.nodes[node[0]]['x'])
+        if node[1] is not None:
+            total_cost += graph.get_edge_data(node[1], node[0])[0]['length']
+        for explored_node in explored:
+            if explored_node[0] == node[1]:
+                node = explored_node
+                break
 
-    return [path, lat, long]
+
+    path.append(origin[0])
+    lat.append(origin[1]['y'])
+    long.append(origin[1]['x'])
+    path.reverse()
+    lat.reverse()
+    long.reverse()
+
+    return [path, lat, long, total_cost]
+
 
 def depth_first_search(graph, origin, destination):
     '''
@@ -152,25 +168,29 @@ def depth_first_search(graph, origin, destination):
      destination is found.
     '''
     print("Depth First Search")
+
     frontier = deque()
     explored = []
     searching = True
 
-    frontier.append(origin[0])
+    frontier.append((origin[0], None))
 
     while searching:
         if len(frontier) == 0:
             return -1
 
-        current = frontier.pop()
-        explored.append(current)
-        for neighbor in graph.neighbors(current):
-            if neighbor not in frontier and neighbor not in explored:
+        frontier_node = frontier.pop()
+        current_node = frontier_node[0]
+        previous_node = frontier_node[1]
+
+        if previous_node is not None:
+            explored.append((current_node, previous_node))
+        for neighbor in graph.neighbors(current_node):
+            if (neighbor, current_node) not in frontier and (neighbor, current_node) not in explored:
                 if neighbor == destination[0]:
-                    explored.append(neighbor)
                     searching = False
                     break    #Success
-                frontier.append(neighbor)
+                frontier.append((neighbor, current_node))
 
     return backtrack(graph, origin, destination, explored)
 
@@ -207,7 +227,6 @@ destination_points = [
 origin_point = (36.30321114344463, -83.36710826765649) # Gilbreath Hall
 origin = ox.get_nearest_node(G, origin_point)
 origin_node = (origin, G.nodes[origin])
-print(origin_node)
 for destination_point in destination_points:
     destination = ox.get_nearest_node(G, destination_point)
     destination_node = (destination, G.nodes[destination])
@@ -216,21 +235,17 @@ for destination_point in destination_points:
     lat = []
     long = []
 
-    neighbors = G.neighbors(origin)
-    for neighbor in neighbors:
-        print(neighbor)
-
     # bfs_route, lat, long, bfs_distance = breadth_first_search(G, origin_node, destination_node)
     # route_path = node_list_to_path(G, bfs_route)
     # plot_path(lat, long, origin_node, destination_node)
 
     # dfs_route, lat, long, dfs_distance = 
-    dfs_route, lat, long = depth_first_search(G, origin_node, destination_node)
+    dfs_route, lat, long, dfs_distance = depth_first_search(G, origin_node, destination_node)
     route_path = node_list_to_path(G, dfs_route)
     plot_path(lat, long, origin_node, destination_node) # Until filled in with values, this doesn't do much.
 
     # print("Total Route Distance (BFS):", bfs_distance)
-    # print("Total Route Distance (DFS):", dfs_distance)
+    print("Total Route Distance (DFS):", dfs_distance)
 
 
     # The following is example code to save your map to an HTML file.
