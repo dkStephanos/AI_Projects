@@ -7,6 +7,21 @@ import numpy as np
 import matplotlib.pyplot as plt
 from collections import deque
 import random
+import time
+
+ALL_RESULTS = ""
+
+def method_timing(func):
+    def wrapper(*arg):
+        global ALL_RESULTS
+        t1 = time.time()
+        res = func(*arg)
+        t2 = time.time()
+        output_string = '\n%s took %0.3f ms' % (func, (t2-t1)*1000.0)
+        print(output_string)
+        ALL_RESULTS += output_string
+        return [res,(t2-t1)*1000.0]
+    return wrapper
 
 ox.config(log_console=True, use_cache=True)
 
@@ -139,11 +154,11 @@ def backtrack(graph, origin, end_node, explored):
     node = explored[-1]
 
     while True:
-        if node[0] == origin[0]:
-            break
         path.append(node[0])
         lat.append(graph.nodes[node[0]]['y'])
         long.append(graph.nodes[node[0]]['x'])
+        if node[1] == origin[0]:
+            break
         if node[1] is not None:
             total_cost += graph.get_edge_data(node[1], node[0])[0]['length']
         for explored_node in explored:
@@ -161,7 +176,7 @@ def backtrack(graph, origin, end_node, explored):
 
     return [path, lat, long, total_cost]
 
-
+@method_timing
 def depth_first_search(graph, origin, destination):
     '''
     Accepts the graph and the origin and destination points
@@ -195,8 +210,7 @@ def depth_first_search(graph, origin, destination):
 
     return backtrack(graph, origin, destination, explored)
 
-
-
+@method_timing
 def breadth_first_search(graph, origin, destination):
     '''
     Accepts the graph and the origin and destination points
@@ -230,7 +244,7 @@ def breadth_first_search(graph, origin, destination):
 
     return backtrack(graph, origin, destination, explored)
 
-
+@method_timing
 def uninformed_search(graph, origin, destination):
         '''
         Accepts the graph and the origin and destination points
@@ -269,17 +283,18 @@ def uninformed_search(graph, origin, destination):
 ## -- Set up Destination Point
 destination_points = [
     (36.359595, -82.398868),    # Walmart on West Market
-    #(36.342513, -82.373483),    # Target on North Roan
-    #(36.320831, -82.277667),    # Tweetsie Trail entrance
-    #(36.316574, -82.352577),    # Frieberg's German Restuarant
-    #36.301605, -82.337822),    # Food City on South Roan
-    #(36.347904, -82.400772),    # Best Buy on Peoples Street
+    (36.342513, -82.373483),    # Target on North Roan
+    (36.320831, -82.277667),    # Tweetsie Trail entrance
+    (36.316574, -82.352577),    # Frieberg's German Restuarant
+    (36.301605, -82.337822),    # Food City on South Roan
+    (36.347904, -82.400772),    # Best Buy on Peoples Street
 ]
 
 origin_point = (36.30321114344463, -83.36710826765649) # Gilbreath Hall
 origin = ox.get_nearest_node(G, origin_point)
 origin_node = (origin, G.nodes[origin])
 for destination_point in destination_points:
+    ALL_RESULTS += f"\n\nResults for destination point: ({destination_point[0]},{destination_point[1]})\n--------------------------\n\n"
     destination = ox.get_nearest_node(G, destination_point)
     destination_node = (destination, G.nodes[destination])
     bfs_distance = 0
@@ -287,22 +302,25 @@ for destination_point in destination_points:
     lat = []
     long = []
     
-    bfs_route, lat, long, bfs_distance = breadth_first_search(G, origin_node, destination_node)
+    bfs_route, lat, long, bfs_distance = breadth_first_search(G, origin_node, destination_node)[0]
     route_path = node_list_to_path(G, bfs_route)
     plot_path(lat, long, origin_node, destination_node)
 
-    dfs_route, lat, long, dfs_distance = depth_first_search(G, origin_node, destination_node)
+    dfs_route, lat, long, dfs_distance = depth_first_search(G, origin_node, destination_node)[0]
     route_path = node_list_to_path(G, dfs_route)
     plot_path(lat, long, origin_node, destination_node)
     
-    uninformed_route, lat, long, uninformed_distance = uninformed_search(G, origin_node, destination_node)
+    uninformed_route, lat, long, uninformed_distance = uninformed_search(G, origin_node, destination_node)[0]
     route_path = node_list_to_path(G, uninformed_route)
     plot_path(lat, long, origin_node, destination_node)
     
-    print("Total Route Distance (BFS):", bfs_distance)
-    print("Total Route Distance (DFS):", dfs_distance)
-    print("Total Route Distance (Random-Depth):", uninformed_distance)
+    ALL_RESULTS += "\nTotal Route Distance (BFS):" + str(bfs_distance)
+    ALL_RESULTS += "\nTotal Route Distance (DFS):" + str(dfs_distance)
+    ALL_RESULTS += "\nTotal Route Distance (Random-Depth):" + str(uninformed_distance)
 
+    text_file = open("project1_mapper_results.txt", "w")
+    text_file.write(ALL_RESULTS)
+    text_file.close()
 
     # The following is example code to save your map to an HTML file.
     # route = nx.shortest_path(G, origin_node, destination_node)
