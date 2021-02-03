@@ -213,12 +213,13 @@ class Field:
             current = parent
             parent = came_from[str(current)]
             self.path.append(current)
+        print(self.start)
         line = Line(current,parent)
         line.setWidth(4)
         line.setOutline("white")
         line.setArrow("first")
-        line.draw(self.win)
         self.extras.append(line)
+        line.draw(self.win)
         self.path.append(parent)
         self.path.reverse()
 
@@ -243,6 +244,31 @@ class Field:
             The Breadth-First Search Algorithm
         '''
         print("Breadth-First Search")
+
+        frontier = deque()
+        explored = {}
+        searching = True
+
+        frontier.appendleft((self.start, None))
+        while searching:
+            if len(frontier) == 0:
+                return -1
+
+            frontier_node = frontier.pop()
+            current_node = frontier_node[0]
+            previous_node = frontier_node[1]
+
+            if previous_node is not None:
+                explored[str(current_node)] = previous_node
+            for neighbor in self.get_neighbors(current_node):
+                if (neighbor, current_node) not in frontier and str(neighbor) not in explored.keys():
+                    if neighbor == self.end:
+                        explored[str(self.end)] = current_node
+                        searching = False
+                        break    #Success
+                    frontier.appendleft((neighbor, current_node))
+
+        return self.backtrack(explored, self.end)
 
 
     def best_first_search(self):
@@ -325,37 +351,42 @@ def setup_polygon_field(f):
 ##==============================================================================
 def main():
     ## === Regular Field
+    
     f = Field(1280, 720, "Bucky's Treasure Hunt")
     f.setCoords(0, 720, 1280, 0)
     f.setBackground(etsu_blue)
     setup_logo_map(f)
     starting_point = Point(20,375)
     ending_point = Point(1200,700)
+    
 
     ## === Game Map Field
-    # f = Field(1024, 1024, "Bucky's Treasure Hunt")
-    # f.setCoords(0, 1024, 1024, 0)
-    # f.setBackground(etsu_blue)
-    # setup_game(f)
-    # starting_point = Point(200,100)
-    # ending_point = Point(400,600)
+    '''
+    f = Field(1024, 1024, "Bucky's Treasure Hunt")
+    f.setCoords(0, 1024, 1024, 0)
+    f.setBackground(etsu_blue)
+    setup_game_map(f)
+    starting_point = Point(200,100)
+    ending_point = Point(400,600)
+    '''
 
     f.add_start(starting_point)
     f.add_end(ending_point)
-
     f.wait()
-
     print("Breadth-First Search:",f.breadth_first_search())
+    '''
     f.wait()
     f.reset(starting_point,ending_point)
     print("A* Search:",f.astar_search())
+    
     f.wait()
     f.reset(starting_point,ending_point)
     print("Depth-First Search:",f.depth_first_search())
+    
     f.wait()
     f.reset(starting_point,ending_point)
     print("Best-First Search:",f.best_first_search())
-
+    '''
     f.close()
 
 main()
