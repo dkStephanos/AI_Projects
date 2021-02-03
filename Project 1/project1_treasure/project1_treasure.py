@@ -220,7 +220,7 @@ class Field:
         while parent != self.start:
             line = Line(current,parent)
             line.setWidth(4)
-            line.setOutline("white")
+            line.setOutline(etsu_blue)
             line.setArrow("first")
             self.extras.append(line)
             line.draw(self.win)
@@ -229,7 +229,7 @@ class Field:
             self.path.append(current)
         line = Line(current,parent)
         line.setWidth(4)
-        line.setOutline("white")
+        line.setOutline(etsu_blue)
         line.setArrow("first")
         self.extras.append(line)
         line.draw(self.win)
@@ -328,16 +328,15 @@ class Field:
             if frontier.empty():
                 return -1
             current = frontier.get()
-            if current[1] is not None:
-                explored[str(current[0])] = current[1]
-
+            explored[str(current[0])] = current[1]
             for child in self.get_neighbors(current[0]):
-                if str(child) not in explored.keys():
+                if ((child, current[0]), self.straight_line_distance(child, self.end)) not in frontier.queue and str(child) not in explored.keys():
                     if child == self.end:
                         explored[str(self.end)] = current[0]
                         searching = False
                         break    #Success
                     frontier.put((child, current[0]), self.straight_line_distance(child, self.end))
+                    print(f'placing {child} in frontier')
 
         return self.backtrack(explored, self.end)
 
@@ -439,12 +438,12 @@ def setup_polygon_field(f):
 def main():
 
 
-    for map in range(1, 3):
+    for map in range(1, 2):
         if map == 1:
             ## === Regular Field
             f = Field(1280, 720, "Bucky's Treasure Hunt")
             f.setCoords(0, 720, 1280, 0)
-            f.setBackground(etsu_blue)
+            f.setBackground(white)
             setup_logo_map(f)
             starting_point = Point(20,375)
             ending_point = Point(1200,700)
@@ -453,15 +452,16 @@ def main():
             ## === Game Map Field
             f = Field(1024, 1024, "Bucky's Treasure Hunt")
             f.setCoords(0, 1024, 1024, 0)
-            f.setBackground(etsu_blue)
+            f.setBackground(white)
             setup_game_map(f)
             starting_point = Point(200,100)
             ending_point = Point(400,600)
-
+        
         f.add_start(starting_point)
         f.add_end(ending_point)
         f.wait()
         print("Breadth-First Search:",f.breadth_first_search())
+        f.win.postscript(file=f"bfs-map{map}-treasure-results.eps")
         
         f.wait()
         f.reset(starting_point,ending_point)
@@ -471,10 +471,9 @@ def main():
         f.reset(starting_point,ending_point)
         print("Depth-First Search:",f.depth_first_search())
         
-        if map != 2:
-            f.wait()
-            f.reset(starting_point,ending_point)
-            print("Best-First Search:",f.best_first_search())
+        f.wait()
+        f.reset(starting_point,ending_point)
+        print("Best-First Search:",f.best_first_search())
         
         f.close()
 
