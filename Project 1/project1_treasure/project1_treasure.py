@@ -24,7 +24,7 @@ def method_timing(func):
         t1 = time.time()
         res = func(*arg)
         t2 = time.time()
-        output_string = '\n%s took %0.3f ms' % (func, (t2-t1)*1000.0)
+        output_string = '\n%s took %0.3f ms with a total path cost of %0.5f ' % (func, (t2-t1)*1000.0, res)
         print(output_string)
         ALL_RESULTS += output_string
         return [res,(t2-t1)*1000.0]
@@ -213,6 +213,8 @@ class Field:
 
             Requires a came_from dictionary that contains the parents of each node.
             The node passed is the end of the path.
+
+            returns the total path cost
         '''
         current = node
         self.path.append(current)
@@ -235,6 +237,15 @@ class Field:
         line.draw(self.win)
         self.path.append(parent)
         self.path.reverse()
+
+        return self.get_path_cost()
+
+    def get_path_cost(self):
+        total_cost = 0
+        for index in range(0, len(self.path) -1):
+            total_cost += self.straight_line_distance(self.path[index], self.path[index + 1])
+
+        return total_cost
 
 
     def straight_line_distance(self, point1, point2):
@@ -445,7 +456,7 @@ def setup_polygon_field(f):
 def main():
 
 
-    for map in range(1, 4):
+    for map in range(3, 4):
         if map == 1:
             ## === Regular Field
             f = Field(1280, 720, "Bucky's Treasure Hunt")
@@ -495,7 +506,7 @@ def main():
         f.win.postscript(file=f"data/best-first-map{map}-treasure-results.eps")
         
         f.close()
-
+        
     text_file = open("data/project1_treasure_results.txt", "w")
     text_file.write(ALL_RESULTS)
     text_file.close()

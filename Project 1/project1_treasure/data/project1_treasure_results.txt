@@ -1,13 +1,13 @@
 
-<function Field.breadth_first_search at 0x000002047D585040> took 1104.524 ms
-<function Field.astar_search at 0x000002047D585280> took 207.000 ms
-<function Field.depth_first_search at 0x000002047D581EE0> took 215.000 ms
-<function Field.best_first_search at 0x000002047D585160> took 311.010 ms
-<function Field.breadth_first_search at 0x000002047D585040> took 33498.004 ms
-<function Field.astar_search at 0x000002047D585280> took 12804.000 ms
-<function Field.depth_first_search at 0x000002047D581EE0> took 4822.001 ms
-<function Field.best_first_search at 0x000002047D585160> took 31372.000 ms
-<function Field.breadth_first_search at 0x000002047D585040> took 1402.991 ms
-<function Field.astar_search at 0x000002047D585280> took 303.011 ms
-<function Field.depth_first_search at 0x000002047D581EE0> took 352.001 ms
-<function Field.best_first_search at 0x000002047D585160> took 322.997 ms
+<function Field.breadth_first_search at 0x0000015875A65040> took 1067.014 ms with a total path cost of 1709.03334 
+<function Field.astar_search at 0x0000015875A65280> took 198.989 ms with a total path cost of 1281.56431 
+<function Field.depth_first_search at 0x0000015875A61EE0> took 213.005 ms with a total path cost of 1302.96308 
+<function Field.best_first_search at 0x0000015875A65160> took 319.005 ms with a total path cost of 1281.56431 
+<function Field.breadth_first_search at 0x0000015875A65040> took 33440.976 ms with a total path cost of 1348.57416 
+<function Field.astar_search at 0x0000015875A65280> took 12415.998 ms with a total path cost of 1086.59433 
+<function Field.depth_first_search at 0x0000015875A61EE0> took 5023.006 ms with a total path cost of 1086.59433 
+<function Field.best_first_search at 0x0000015875A65160> took 32816.999 ms with a total path cost of 1086.59433 
+<function Field.breadth_first_search at 0x0000015875A65040> took 258.988 ms with a total path cost of 917.94595 
+<function Field.astar_search at 0x0000015875A65280> took 117.011 ms with a total path cost of 698.37963 
+<function Field.depth_first_search at 0x0000015875A61EE0> took 136.002 ms with a total path cost of 698.37963 
+<function Field.best_first_search at 0x0000015875A65160> took 121.010 ms with a total path cost of 698.37963 
