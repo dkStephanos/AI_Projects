@@ -456,7 +456,7 @@ def setup_polygon_field(f):
 def main():
 
 
-    for map in range(3, 4):
+    for map in range(1, 4):
         if map == 1:
             ## === Regular Field
             f = Field(1280, 720, "Bucky's Treasure Hunt")
@@ -506,7 +506,7 @@ def main():
         f.win.postscript(file=f"data/best-first-map{map}-treasure-results.eps")
         
         f.close()
-        
+
     text_file = open("data/project1_treasure_results.txt", "w")
     text_file.write(ALL_RESULTS)
     text_file.close()
