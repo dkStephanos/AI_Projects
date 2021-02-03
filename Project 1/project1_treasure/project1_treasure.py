@@ -337,6 +337,32 @@ class Field:
         '''
         print("A* Search")
 
+        steps = 0
+        start = self.start
+
+        frontier = PriorityQueue()
+        frontier.put(start,0)
+        came_from = {}
+        cost_so_far = {}
+
+        came_from[str(start)] = None
+        cost_so_far[start] = 0
+
+        while not frontier.empty():
+            current = frontier.get()
+
+            if current == self.end:
+                break
+
+            for child in self.get_neighbors(current):
+                new_cost = cost_so_far[current] + 1 # You took one step past current
+                if (child not in cost_so_far.keys() or new_cost < cost_so_far[child]):
+                    cost_so_far[child] = new_cost
+                    priority = new_cost + self.straight_line_distance(child, self.end)
+                    frontier.put(child,priority)
+                    came_from[str(child)] = current
+
+        return self.backtrack(came_from, self.end)
 
 ##==============================================================================
 ##==============================================================================
@@ -415,25 +441,24 @@ def main():
     setup_game_map(f)
     starting_point = Point(200,100)
     ending_point = Point(400,600)
-    '''
-    '''
+
     f.add_start(starting_point)
     f.add_end(ending_point)
     f.wait()
     print("Breadth-First Search:",f.breadth_first_search())
-    
-    f.wait()
-    f.reset(starting_point,ending_point)
-    print("A* Search:",f.astar_search())
-    
-    f.wait()
-    f.reset(starting_point,ending_point)
-    print("Depth-First Search:",f.depth_first_search())
     '''
     f.wait()
     f.reset(starting_point,ending_point)
-    print("Best-First Search:",f.best_first_search())
+    print("A* Search:",f.astar_search())
+    '''
+    f.wait()
+    f.reset(starting_point,ending_point)
+    print("Depth-First Search:",f.depth_first_search())
     
+    f.wait()
+    f.reset(starting_point,ending_point)
+    print("Best-First Search:",f.best_first_search())
+    '''
     f.close()
 
 main()
