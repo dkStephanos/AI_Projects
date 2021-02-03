@@ -213,7 +213,6 @@ class Field:
             current = parent
             parent = came_from[str(current)]
             self.path.append(current)
-        print(self.start)
         line = Line(current,parent)
         line.setWidth(4)
         line.setOutline("white")
@@ -305,6 +304,29 @@ class Field:
         '''
         print("Best-First Search")
 
+        frontier = PriorityQueue()
+        explored = {}
+        searching = True
+
+        frontier.put((self.start, None), self.straight_line_distance(self.start, self.end))
+
+        while searching:
+            if frontier.empty():
+                return -1
+            current = frontier.get()
+            if current[1] is not None:
+                explored[str(current[0])] = current[1]
+
+            for child in self.get_neighbors(current[0]):
+                if str(child) not in explored.keys():
+                    if child == self.end:
+                        explored[str(self.end)] = current[0]
+                        searching = False
+                        break    #Success
+                    frontier.put((child, current[0]), self.straight_line_distance(child, self.end))
+
+        return self.backtrack(explored, self.end)
+
 
     def astar_search(self):
         '''
@@ -394,16 +416,16 @@ def main():
     starting_point = Point(200,100)
     ending_point = Point(400,600)
     '''
-
+    '''
     f.add_start(starting_point)
     f.add_end(ending_point)
     f.wait()
     print("Breadth-First Search:",f.breadth_first_search())
-    '''
+    
     f.wait()
     f.reset(starting_point,ending_point)
     print("A* Search:",f.astar_search())
-    '''
+    
     f.wait()
     f.reset(starting_point,ending_point)
     print("Depth-First Search:",f.depth_first_search())
@@ -411,7 +433,7 @@ def main():
     f.wait()
     f.reset(starting_point,ending_point)
     print("Best-First Search:",f.best_first_search())
-    '''
+    
     f.close()
 
 main()
