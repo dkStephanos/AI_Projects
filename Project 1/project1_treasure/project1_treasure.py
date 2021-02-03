@@ -3,7 +3,7 @@ from collections import deque
 import math
 from operator import itemgetter
 import numpy as np
-
+from random import random
 
 # Define Colors
 red = color_rgb(255, 0, 0)
@@ -336,7 +336,6 @@ class Field:
                         searching = False
                         break    #Success
                     frontier.put((child, current[0]), self.straight_line_distance(child, self.end))
-                    print(f'placing {child} in frontier')
 
         return self.backtrack(explored, self.end)
 
@@ -431,6 +430,14 @@ def setup_polygon_field(f):
     #p4.setFill(gray)
     #f.add_polygon(p4)
     print("My Very Own Polygon Field that I created Myself.")
+    points = []
+    for shape in range(1,11):
+        for point in range(0, math.floor(random() * 6) + 3):
+            points.append(Point(random()*250 + shape*50, random()*250 + shape*50))
+        p = Polygon(points)
+        p.setFill(etsu_gold)
+        f.add_polygon(p)
+        points = []
 
 
 ##==============================================================================
@@ -438,7 +445,7 @@ def setup_polygon_field(f):
 def main():
 
 
-    for map in range(1, 2):
+    for map in range(1, 4):
         if map == 1:
             ## === Regular Field
             f = Field(1280, 720, "Bucky's Treasure Hunt")
@@ -454,6 +461,15 @@ def main():
             f.setCoords(0, 1024, 1024, 0)
             f.setBackground(white)
             setup_game_map(f)
+            starting_point = Point(200,100)
+            ending_point = Point(400,600)
+
+        if map == 3:
+            ## === Game Map Field
+            f = Field(1024, 1024, "Bucky's Treasure Hunt")
+            f.setCoords(0, 1024, 1024, 0)
+            f.setBackground(white)
+            setup_polygon_field(f)
             starting_point = Point(200,100)
             ending_point = Point(400,600)
         
