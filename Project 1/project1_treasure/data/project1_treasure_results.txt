@@ -1,0 +1,13 @@
+
+<function Field.breadth_first_search at 0x000002047D585040> took 1104.524 ms
+<function Field.astar_search at 0x000002047D585280> took 207.000 ms
+<function Field.depth_first_search at 0x000002047D581EE0> took 215.000 ms
+<function Field.best_first_search at 0x000002047D585160> took 311.010 ms
+<function Field.breadth_first_search at 0x000002047D585040> took 33498.004 ms
+<function Field.astar_search at 0x000002047D585280> took 12804.000 ms
+<function Field.depth_first_search at 0x000002047D581EE0> took 4822.001 ms
+<function Field.best_first_search at 0x000002047D585160> took 31372.000 ms
+<function Field.breadth_first_search at 0x000002047D585040> took 1402.991 ms
+<function Field.astar_search at 0x000002047D585280> took 303.011 ms
+<function Field.depth_first_search at 0x000002047D581EE0> took 352.001 ms
+<function Field.best_first_search at 0x000002047D585160> took 322.997 ms
