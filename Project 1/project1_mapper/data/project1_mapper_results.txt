@@ -1,0 +1,12 @@
+
+
+Results for destination point: (36.359595,-82.398868)
+--------------------------
+
+
+<function breadth_first_search at 0x000001EA86085820> took 252.000 ms
+<function depth_first_search at 0x000001EA86085940> took 12.999 ms
+<function uninformed_search at 0x000001EA86085700> took 444.999 ms
+Total Route Distance (BFS):6242.875999999999
+Total Route Distance (DFS):28712.804000000015
+Total Route Distance (Random-Depth):73189.254
