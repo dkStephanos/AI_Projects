@@ -4,9 +4,64 @@ Results for destination point: (36.359595,-82.398868)
 --------------------------
 
 
-<function breadth_first_search at 0x000001EA86085820> took 252.000 ms
-<function depth_first_search at 0x000001EA86085940> took 12.999 ms
-<function uninformed_search at 0x000001EA86085700> took 444.999 ms
+<function breadth_first_search at 0x000001E905706700> took 270.997 ms
+<function depth_first_search at 0x000001E905706820> took 10.000 ms
+<function uninformed_search at 0x000001E9057065E0> took 884.000 ms
 Total Route Distance (BFS):6242.875999999999
 Total Route Distance (DFS):28712.804000000015
-Total Route Distance (Random-Depth):73189.254
+Total Route Distance (Random-Depth):11610.693000000001
+
+Results for destination point: (36.342513,-82.373483)
+--------------------------
+
+
+<function breadth_first_search at 0x000001E905706700> took 835.998 ms
+<function depth_first_search at 0x000001E905706820> took 90.997 ms
+<function uninformed_search at 0x000001E9057065E0> took 523.002 ms
+Total Route Distance (BFS):7935.616999999998
+Total Route Distance (DFS):22084.196000000007
+Total Route Distance (Random-Depth):101088.07999999991
+
+Results for destination point: (36.320831,-82.277667)
+--------------------------
+
+
+<function breadth_first_search at 0x000001E905706700> took 873.996 ms
+<function depth_first_search at 0x000001E905706820> took 233.995 ms
+<function uninformed_search at 0x000001E9057065E0> took 327.000 ms
+Total Route Distance (BFS):9734.735999999999
+Total Route Distance (DFS):49390.01199999997
+Total Route Distance (Random-Depth):84502.93199999997
+
+Results for destination point: (36.316574,-82.352577)
+--------------------------
+
+
+<function breadth_first_search at 0x000001E905706700> took 331.999 ms
+<function depth_first_search at 0x000001E905706820> took 162.997 ms
+<function uninformed_search at 0x000001E9057065E0> took 968.997 ms
+Total Route Distance (BFS):7316.789999999999
+Total Route Distance (DFS):37555.996000000014
+Total Route Distance (Random-Depth):68433.49100000001
+
+Results for destination point: (36.301605,-82.337822)
+--------------------------
+
+
+<function breadth_first_search at 0x000001E905706700> took 470.995 ms
+<function depth_first_search at 0x000001E905706820> took 392.997 ms
+<function uninformed_search at 0x000001E9057065E0> took 111.001 ms
+Total Route Distance (BFS):8694.142999999998
+Total Route Distance (DFS):74724.085
+Total Route Distance (Random-Depth):54825.63199999997
+
+Results for destination point: (36.347904,-82.400772)
+--------------------------
+
+
+<function breadth_first_search at 0x000001E905706700> took 331.001 ms
+<function depth_first_search at 0x000001E905706820> took 23.006 ms
+<function uninformed_search at 0x000001E9057065E0> took 109.000 ms
+Total Route Distance (BFS):6242.875999999999
+Total Route Distance (DFS):28712.804000000015
+Total Route Distance (Random-Depth):59111.83999999998
