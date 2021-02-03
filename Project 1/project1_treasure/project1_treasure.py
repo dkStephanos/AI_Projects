@@ -461,19 +461,22 @@ def main():
         f.add_end(ending_point)
         f.wait()
         print("Breadth-First Search:",f.breadth_first_search())
-        f.win.postscript(file=f"bfs-map{map}-treasure-results.eps")
+        f.win.postscript(file=f"data/bfs-map{map}-treasure-results.eps")
         
         f.wait()
         f.reset(starting_point,ending_point)
         print("A* Search:",f.astar_search())
+        f.win.postscript(file=f"data/astar-map{map}-treasure-results.eps")
         
         f.wait()
         f.reset(starting_point,ending_point)
         print("Depth-First Search:",f.depth_first_search())
+        f.win.postscript(file=f"data/dfs-map{map}-treasure-results.eps")
         
         f.wait()
         f.reset(starting_point,ending_point)
         print("Best-First Search:",f.best_first_search())
+        f.win.postscript(file=f"data/best-first-map{map}-treasure-results.eps")
         
         f.close()
 
