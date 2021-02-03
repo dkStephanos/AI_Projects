@@ -16,6 +16,20 @@ gray = color_rgb(162, 170, 173)
 etsu_gold = color_rgb(255, 199, 44)
 
 
+ALL_RESULTS = ""
+
+def method_timing(func):
+    def wrapper(*arg):
+        global ALL_RESULTS
+        t1 = time.time()
+        res = func(*arg)
+        t2 = time.time()
+        output_string = '\n%s took %0.3f ms' % (func, (t2-t1)*1000.0)
+        print(output_string)
+        ALL_RESULTS += output_string
+        return [res,(t2-t1)*1000.0]
+    return wrapper
+
 ##==============================================================================
 class PriorityQueue:
     """
@@ -230,7 +244,7 @@ class Field:
         sld = math.sqrt((point1.x - point2.x)**2 + (point1.y - point2.y)**2)
         return sld
 
-
+    @method_timing
     def depth_first_search(self):
         '''
             The Depth-First Search Algorithm
@@ -262,7 +276,7 @@ class Field:
 
         return self.backtrack(explored, self.end)
 
-
+    @method_timing
     def breadth_first_search(self):
         '''
             The Breadth-First Search Algorithm
@@ -294,7 +308,7 @@ class Field:
 
         return self.backtrack(explored, self.end)
 
-
+    @method_timing
     def best_first_search(self):
         '''
            The Best-First Search Algorithm
@@ -327,7 +341,7 @@ class Field:
 
         return self.backtrack(explored, self.end)
 
-
+    @method_timing
     def astar_search(self):
         '''
            The A* Search Algorithm
@@ -423,42 +437,49 @@ def setup_polygon_field(f):
 ##==============================================================================
 ##==============================================================================
 def main():
-    ## === Regular Field
-    
-    f = Field(1280, 720, "Bucky's Treasure Hunt")
-    f.setCoords(0, 720, 1280, 0)
-    f.setBackground(etsu_blue)
-    setup_logo_map(f)
-    starting_point = Point(20,375)
-    ending_point = Point(1200,700)
-    
 
-    ## === Game Map Field
-    '''
-    f = Field(1024, 1024, "Bucky's Treasure Hunt")
-    f.setCoords(0, 1024, 1024, 0)
-    f.setBackground(etsu_blue)
-    setup_game_map(f)
-    starting_point = Point(200,100)
-    ending_point = Point(400,600)
 
-    f.add_start(starting_point)
-    f.add_end(ending_point)
-    f.wait()
-    print("Breadth-First Search:",f.breadth_first_search())
-    '''
-    f.wait()
-    f.reset(starting_point,ending_point)
-    print("A* Search:",f.astar_search())
-    '''
-    f.wait()
-    f.reset(starting_point,ending_point)
-    print("Depth-First Search:",f.depth_first_search())
-    
-    f.wait()
-    f.reset(starting_point,ending_point)
-    print("Best-First Search:",f.best_first_search())
-    '''
-    f.close()
+    for map in range(1, 3):
+        if map == 1:
+            ## === Regular Field
+            f = Field(1280, 720, "Bucky's Treasure Hunt")
+            f.setCoords(0, 720, 1280, 0)
+            f.setBackground(etsu_blue)
+            setup_logo_map(f)
+            starting_point = Point(20,375)
+            ending_point = Point(1200,700)
+        
+        if map == 2:
+            ## === Game Map Field
+            f = Field(1024, 1024, "Bucky's Treasure Hunt")
+            f.setCoords(0, 1024, 1024, 0)
+            f.setBackground(etsu_blue)
+            setup_game_map(f)
+            starting_point = Point(200,100)
+            ending_point = Point(400,600)
+
+        f.add_start(starting_point)
+        f.add_end(ending_point)
+        f.wait()
+        print("Breadth-First Search:",f.breadth_first_search())
+        
+        f.wait()
+        f.reset(starting_point,ending_point)
+        print("A* Search:",f.astar_search())
+        
+        f.wait()
+        f.reset(starting_point,ending_point)
+        print("Depth-First Search:",f.depth_first_search())
+        
+        if map != 2:
+            f.wait()
+            f.reset(starting_point,ending_point)
+            print("Best-First Search:",f.best_first_search())
+        
+        f.close()
+
+    text_file = open("data/project1_treasure_results.txt", "w")
+    text_file.write(ALL_RESULTS)
+    text_file.close()
 
 main()
