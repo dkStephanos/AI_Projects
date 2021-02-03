@@ -287,11 +287,11 @@ def uninformed_search(graph, origin, destination):
 ## -- Set up Destination Point
 destination_points = [
     (36.359595, -82.398868),    # Walmart on West Market
-    #(36.342513, -82.373483),    # Target on North Roan
-    #(36.320831, -82.277667),    # Tweetsie Trail entrance
-    #(36.316574, -82.352577),    # Frieberg's German Restuarant
-    #(36.301605, -82.337822),    # Food City on South Roan
-    #(36.347904, -82.400772),    # Best Buy on Peoples Street
+    (36.342513, -82.373483),    # Target on North Roan
+    (36.320831, -82.277667),    # Tweetsie Trail entrance
+    (36.316574, -82.352577),    # Frieberg's German Restuarant
+    (36.301605, -82.337822),    # Food City on South Roan
+    (36.347904, -82.400772),    # Best Buy on Peoples Street
 ]
 
 origin_point = (36.30321114344463, -83.36710826765649) # Gilbreath Hall
@@ -330,13 +330,3 @@ for destination_point in destination_points:
     text_file = open("data/project1_mapper_results.txt", "w")
     text_file.write(ALL_RESULTS)
     text_file.close()
-
-    # The following is example code to save your map to an HTML file.
-    # route = nx.shortest_path(G, origin_node, destination_node)
-    # route_map = ox.plot_route_folium(G, route)
-    # filepath = 'data/graph.html'
-    # route_map.save(filepath)
-    # print(G.nodes(True))
-    # ec = ox.plot.get_edge_colors_by_attr(G, attr='length', cmap='plasma_r')
-    # fig, ax = ox.plot_graph(G, node_color='w', node_edgecolor='k', node_size=20,
-    #                         edge_color=ec, edge_linewidth=2)
