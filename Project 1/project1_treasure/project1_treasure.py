@@ -238,6 +238,31 @@ class Field:
         '''
         print("Depth-First Search")
 
+        frontier = deque()
+        explored = {}
+        searching = True
+
+        frontier.append((self.start, None))
+        while searching:
+            if len(frontier) == 0:
+                return -1
+
+            frontier_node = frontier.pop()
+            current_node = frontier_node[0]
+            previous_node = frontier_node[1]
+
+            if previous_node is not None:
+                explored[str(current_node)] = previous_node
+            for neighbor in self.get_neighbors(current_node):
+                if (neighbor, current_node) not in frontier and str(neighbor) not in explored.keys():
+                    if neighbor == self.end:
+                        explored[str(self.end)] = current_node
+                        searching = False
+                        break    #Success
+                    frontier.append((neighbor, current_node))
+
+        return self.backtrack(explored, self.end)
+
 
     def breadth_first_search(self):
         '''
@@ -378,11 +403,11 @@ def main():
     f.wait()
     f.reset(starting_point,ending_point)
     print("A* Search:",f.astar_search())
-    
+    '''
     f.wait()
     f.reset(starting_point,ending_point)
     print("Depth-First Search:",f.depth_first_search())
-    
+    '''
     f.wait()
     f.reset(starting_point,ending_point)
     print("Best-First Search:",f.best_first_search())
