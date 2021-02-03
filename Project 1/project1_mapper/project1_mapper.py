@@ -75,6 +75,10 @@ def node_list_to_path(gr, node_list):
 
     return lines
 
+def path_to_file(graph, route, filepath):
+    route_map = ox.plot_route_folium(graph, route)
+    route_map.save(filepath)
+
 
 def plot_path(lat, long, origin_point, destination_point):
     """
@@ -283,17 +287,19 @@ def uninformed_search(graph, origin, destination):
 ## -- Set up Destination Point
 destination_points = [
     (36.359595, -82.398868),    # Walmart on West Market
-    (36.342513, -82.373483),    # Target on North Roan
-    (36.320831, -82.277667),    # Tweetsie Trail entrance
-    (36.316574, -82.352577),    # Frieberg's German Restuarant
-    (36.301605, -82.337822),    # Food City on South Roan
-    (36.347904, -82.400772),    # Best Buy on Peoples Street
+    #(36.342513, -82.373483),    # Target on North Roan
+    #(36.320831, -82.277667),    # Tweetsie Trail entrance
+    #(36.316574, -82.352577),    # Frieberg's German Restuarant
+    #(36.301605, -82.337822),    # Food City on South Roan
+    #(36.347904, -82.400772),    # Best Buy on Peoples Street
 ]
 
 origin_point = (36.30321114344463, -83.36710826765649) # Gilbreath Hall
 origin = ox.get_nearest_node(G, origin_point)
 origin_node = (origin, G.nodes[origin])
+map = 0
 for destination_point in destination_points:
+    map += 1
     ALL_RESULTS += f"\n\nResults for destination point: ({destination_point[0]},{destination_point[1]})\n--------------------------\n\n"
     destination = ox.get_nearest_node(G, destination_point)
     destination_node = (destination, G.nodes[destination])
@@ -305,20 +311,23 @@ for destination_point in destination_points:
     bfs_route, lat, long, bfs_distance = breadth_first_search(G, origin_node, destination_node)[0]
     route_path = node_list_to_path(G, bfs_route)
     plot_path(lat, long, origin_node, destination_node)
+    path_to_file(G, bfs_route, f'data/graph-map{map}-bfs.html')
 
     dfs_route, lat, long, dfs_distance = depth_first_search(G, origin_node, destination_node)[0]
     route_path = node_list_to_path(G, dfs_route)
     plot_path(lat, long, origin_node, destination_node)
+    path_to_file(G, dfs_route, f'data/graph-map{map}-dfs.html')
     
     uninformed_route, lat, long, uninformed_distance = uninformed_search(G, origin_node, destination_node)[0]
     route_path = node_list_to_path(G, uninformed_route)
     plot_path(lat, long, origin_node, destination_node)
+    path_to_file(G, uninformed_route, f'data/graph-map{map}-uninformed.html')
     
     ALL_RESULTS += "\nTotal Route Distance (BFS):" + str(bfs_distance)
     ALL_RESULTS += "\nTotal Route Distance (DFS):" + str(dfs_distance)
     ALL_RESULTS += "\nTotal Route Distance (Random-Depth):" + str(uninformed_distance)
 
-    text_file = open("project1_mapper_results.txt", "w")
+    text_file = open("data/project1_mapper_results.txt", "w")
     text_file.write(ALL_RESULTS)
     text_file.close()
 
