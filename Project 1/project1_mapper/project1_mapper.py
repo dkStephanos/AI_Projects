@@ -294,7 +294,7 @@ destination_points = [
     (36.347904, -82.400772),    # Best Buy on Peoples Street
 ]
 
-origin_point = (36.30321114344463, -83.36710826765649) # Gilbreath Hall
+origin_point = (36.30321114344463, -82.36710826765649) # Gilbreath Hall
 origin = ox.get_nearest_node(G, origin_point)
 origin_node = (origin, G.nodes[origin])
 map = 0
