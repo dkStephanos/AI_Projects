@@ -1,0 +1,13 @@
+
+<function Field.breadth_first_search at 0x000001FC3D495040> took 1088.641 ms with a total path cost of 1709.03334 and 8 steps
+<function Field.astar_search at 0x000001FC3D495280> took 207.000 ms with a total path cost of 1281.56431 and 4 steps
+<function Field.depth_first_search at 0x000001FC3D491EE0> took 218.000 ms with a total path cost of 1302.96308 and 6 steps
+<function Field.best_first_search at 0x000001FC3D495160> took 316.999 ms with a total path cost of 1281.56431 and 4 steps
+<function Field.breadth_first_search at 0x000001FC3D495040> took 34285.974 ms with a total path cost of 1348.57416 and 26 steps
+<function Field.astar_search at 0x000001FC3D495280> took 13193.004 ms with a total path cost of 1086.59433 and 18 steps
+<function Field.depth_first_search at 0x000001FC3D491EE0> took 5002.350 ms with a total path cost of 1086.59433 and 18 steps
+<function Field.best_first_search at 0x000001FC3D495160> took 34317.000 ms with a total path cost of 1086.59433 and 18 steps
+<function Field.breadth_first_search at 0x000001FC3D495040> took 609.983 ms with a total path cost of 728.81206 and 4 steps
+<function Field.astar_search at 0x000001FC3D495280> took 169.007 ms with a total path cost of 659.00097 and 6 steps
+<function Field.depth_first_search at 0x000001FC3D491EE0> took 457.000 ms with a total path cost of 1808.47794 and 13 steps
+<function Field.best_first_search at 0x000001FC3D495160> took 186.965 ms with a total path cost of 659.00097 and 6 steps

@@ -24,7 +24,7 @@ def method_timing(func):
         t1 = time.time()
         res = func(*arg)
         t2 = time.time()
-        output_string = '\n%s took %0.3f ms with a total path cost of %0.5f ' % (func, (t2-t1)*1000.0, res)
+        output_string = '\n%s took %0.3f ms with a total path cost of %0.5f and %i steps' % (func, (t2-t1)*1000.0, res[0], res[1])
         print(output_string)
         ALL_RESULTS += output_string
         return [res,(t2-t1)*1000.0]
@@ -242,10 +242,11 @@ class Field:
 
     def get_path_cost(self):
         total_cost = 0
+        total_steps = len(self.path) - 1
         for index in range(0, len(self.path) -1):
             total_cost += self.straight_line_distance(self.path[index], self.path[index + 1])
 
-        return total_cost
+        return (total_cost, total_steps)
 
 
     def straight_line_distance(self, point1, point2):
@@ -507,7 +508,7 @@ def main():
         
         f.close()
 
-    text_file = open("data/project1_treasure_results.txt", "w")
+    text_file = open("data/project1_treasure_results2.txt", "w")
     text_file.write(ALL_RESULTS)
     text_file.close()
 
