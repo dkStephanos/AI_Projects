@@ -4,64 +4,64 @@ Results for destination point: (36.359595,-82.398868)
 --------------------------
 
 
-<function breadth_first_search at 0x000001E905706700> took 270.997 ms
-<function depth_first_search at 0x000001E905706820> took 10.000 ms
-<function uninformed_search at 0x000001E9057065E0> took 884.000 ms
-Total Route Distance (BFS):6242.875999999999
-Total Route Distance (DFS):28712.804000000015
-Total Route Distance (Random-Depth):11610.693000000001
+<function breadth_first_search at 0x000002C00777ECA0> took 997.998 ms
+<function depth_first_search at 0x000002C00777EDC0> took 11.999 ms
+<function uninformed_search at 0x000002C00777EB80> took 56.998 ms
+Total Route Distance (BFS):7448.816000000002
+Total Route Distance (DFS):25413.508
+Total Route Distance (Random-Depth):41156.432
 
 Results for destination point: (36.342513,-82.373483)
 --------------------------
 
 
-<function breadth_first_search at 0x000001E905706700> took 835.998 ms
-<function depth_first_search at 0x000001E905706820> took 90.997 ms
-<function uninformed_search at 0x000001E9057065E0> took 523.002 ms
-Total Route Distance (BFS):7935.616999999998
-Total Route Distance (DFS):22084.196000000007
-Total Route Distance (Random-Depth):101088.07999999991
+<function breadth_first_search at 0x000002C00777ECA0> took 1359.998 ms
+<function depth_first_search at 0x000002C00777EDC0> took 184.996 ms
+<function uninformed_search at 0x000002C00777EB80> took 811.996 ms
+Total Route Distance (BFS):5652.981999999999
+Total Route Distance (DFS):18784.899999999994
+Total Route Distance (Random-Depth):70023.504
 
 Results for destination point: (36.320831,-82.277667)
 --------------------------
 
 
-<function breadth_first_search at 0x000001E905706700> took 873.996 ms
-<function depth_first_search at 0x000001E905706820> took 233.995 ms
-<function uninformed_search at 0x000001E9057065E0> took 327.000 ms
-Total Route Distance (BFS):9734.735999999999
-Total Route Distance (DFS):49390.01199999997
-Total Route Distance (Random-Depth):84502.93199999997
+<function breadth_first_search at 0x000002C00777ECA0> took 590.984 ms
+<function depth_first_search at 0x000002C00777EDC0> took 360.003 ms
+<function uninformed_search at 0x000002C00777EB80> took 50.999 ms
+Total Route Distance (BFS):4653.238000000001
+Total Route Distance (DFS):46090.71599999999
+Total Route Distance (Random-Depth):33408.25099999999
 
 Results for destination point: (36.316574,-82.352577)
 --------------------------
 
 
-<function breadth_first_search at 0x000001E905706700> took 331.999 ms
-<function depth_first_search at 0x000001E905706820> took 162.997 ms
-<function uninformed_search at 0x000001E9057065E0> took 968.997 ms
-Total Route Distance (BFS):7316.789999999999
-Total Route Distance (DFS):37555.996000000014
-Total Route Distance (Random-Depth):68433.49100000001
+<function breadth_first_search at 0x000002C00777ECA0> took 57.998 ms
+<function depth_first_search at 0x000002C00777EDC0> took 437.995 ms
+<function uninformed_search at 0x000002C00777EB80> took 404.999 ms
+Total Route Distance (BFS):2235.292
+Total Route Distance (DFS):34256.70000000002
+Total Route Distance (Random-Depth):77301.24800000004
 
 Results for destination point: (36.301605,-82.337822)
 --------------------------
 
 
-<function breadth_first_search at 0x000001E905706700> took 470.995 ms
-<function depth_first_search at 0x000001E905706820> took 392.997 ms
-<function uninformed_search at 0x000001E9057065E0> took 111.001 ms
-Total Route Distance (BFS):8694.142999999998
-Total Route Distance (DFS):74724.085
-Total Route Distance (Random-Depth):54825.63199999997
+<function breadth_first_search at 0x000002C00777ECA0> took 33.995 ms
+<function depth_first_search at 0x000002C00777EDC0> took 667.996 ms
+<function uninformed_search at 0x000002C00777EB80> took 116.008 ms
+Total Route Distance (BFS):3265.7579999999994
+Total Route Distance (DFS):66881.21399999999
+Total Route Distance (Random-Depth):56108.86899999994
 
 Results for destination point: (36.347904,-82.400772)
 --------------------------
 
 
-<function breadth_first_search at 0x000001E905706700> took 331.001 ms
-<function depth_first_search at 0x000001E905706820> took 23.006 ms
-<function uninformed_search at 0x000001E9057065E0> took 109.000 ms
-Total Route Distance (BFS):6242.875999999999
-Total Route Distance (DFS):28712.804000000015
-Total Route Distance (Random-Depth):59111.83999999998
+<function breadth_first_search at 0x000002C00777ECA0> took 1343.000 ms
+<function depth_first_search at 0x000002C00777EDC0> took 32.000 ms
+<function uninformed_search at 0x000002C00777EB80> took 826.000 ms
+Total Route Distance (BFS):7448.816000000002
+Total Route Distance (DFS):25413.508
+Total Route Distance (Random-Depth):63748.13599999998

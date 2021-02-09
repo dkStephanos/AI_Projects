@@ -305,28 +305,35 @@ for destination_point in destination_points:
     destination_node = (destination, G.nodes[destination])
     bfs_distance = 0
     dfs_distance = 0
+    uninformed_distance = 0
+    bfs_steps = 0
+    dfs_steps = 0
+    uninformed_steps = 0
     lat = []
     long = []
     
     bfs_route, lat, long, bfs_distance = breadth_first_search(G, origin_node, destination_node)[0]
     route_path = node_list_to_path(G, bfs_route)
-    plot_path(lat, long, origin_node, destination_node)
-    path_to_file(G, bfs_route, f'data/graph-map{map}-bfs.html')
+    bfs_steps = len(route_path) - 1
+    #plot_path(lat, long, origin_node, destination_node)
+    #path_to_file(G, bfs_route, f'data/graph-map{map}-bfs.html')
 
     dfs_route, lat, long, dfs_distance = depth_first_search(G, origin_node, destination_node)[0]
     route_path = node_list_to_path(G, dfs_route)
-    plot_path(lat, long, origin_node, destination_node)
-    path_to_file(G, dfs_route, f'data/graph-map{map}-dfs.html')
+    dfs_steps = len(route_path) - 1
+    #plot_path(lat, long, origin_node, destination_node)
+    #path_to_file(G, dfs_route, f'data/graph-map{map}-dfs.html')
     
     uninformed_route, lat, long, uninformed_distance = uninformed_search(G, origin_node, destination_node)[0]
     route_path = node_list_to_path(G, uninformed_route)
-    plot_path(lat, long, origin_node, destination_node)
-    path_to_file(G, uninformed_route, f'data/graph-map{map}-uninformed.html')
+    uninformed_steps = len(route_path) - 1
+    #plot_path(lat, long, origin_node, destination_node)
+    #path_to_file(G, uninformed_route, f'data/graph-map{map}-uninformed.html')
     
-    ALL_RESULTS += "\nTotal Route Distance (BFS):" + str(bfs_distance)
-    ALL_RESULTS += "\nTotal Route Distance (DFS):" + str(dfs_distance)
-    ALL_RESULTS += "\nTotal Route Distance (Random-Depth):" + str(uninformed_distance)
+    ALL_RESULTS += "\nTotal Route Distance (BFS):" + str(bfs_distance) + "   Total Steps (BFS):" + str(bfs_steps)
+    ALL_RESULTS += "\nTotal Route Distance (DFS):" + str(dfs_distance) + "   Total Steps (DFS):" + str(dfs_steps)
+    ALL_RESULTS += "\nTotal Route Distance (Random-Depth):" + str(uninformed_distance) + "   Total Steps (Uninformed):" + str(uninformed_steps)
 
-    text_file = open("data/project1_mapper_results.txt", "w")
+    text_file = open("data/project1_mapper_results2.txt", "w")
     text_file.write(ALL_RESULTS)
     text_file.close()

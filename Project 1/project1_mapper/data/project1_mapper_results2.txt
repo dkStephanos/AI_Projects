@@ -1,0 +1,67 @@
+
+
+Results for destination point: (36.359595,-82.398868)
+--------------------------
+
+
+<function breadth_first_search at 0x0000021EAE67FCA0> took 1003.013 ms
+<function depth_first_search at 0x0000021EAE67FDC0> took 9.003 ms
+<function uninformed_search at 0x0000021EAE67FB80> took 14.528 ms
+Total Route Distance (BFS):7448.816000000002   Total Steps (BFS):39
+Total Route Distance (DFS):25413.508   Total Steps (DFS):148
+Total Route Distance (Random-Depth):27588.975000000006   Total Steps (Uninformed):183
+
+Results for destination point: (36.342513,-82.373483)
+--------------------------
+
+
+<function breadth_first_search at 0x0000021EAE67FCA0> took 970.006 ms
+<function depth_first_search at 0x0000021EAE67FDC0> took 176.998 ms
+<function uninformed_search at 0x0000021EAE67FB80> took 694.999 ms
+Total Route Distance (BFS):5652.981999999999   Total Steps (BFS):39
+Total Route Distance (DFS):18784.899999999994   Total Steps (DFS):120
+Total Route Distance (Random-Depth):41593.229999999974   Total Steps (Uninformed):315
+
+Results for destination point: (36.320831,-82.277667)
+--------------------------
+
+
+<function breadth_first_search at 0x0000021EAE67FCA0> took 461.999 ms
+<function depth_first_search at 0x0000021EAE67FDC0> took 276.014 ms
+<function uninformed_search at 0x0000021EAE67FB80> took 454.015 ms
+Total Route Distance (BFS):4653.238000000001   Total Steps (BFS):26
+Total Route Distance (DFS):46090.71599999999   Total Steps (DFS):330
+Total Route Distance (Random-Depth):75688.52200000007   Total Steps (Uninformed):482
+
+Results for destination point: (36.316574,-82.352577)
+--------------------------
+
+
+<function breadth_first_search at 0x0000021EAE67FCA0> took 33.995 ms
+<function depth_first_search at 0x0000021EAE67FDC0> took 239.990 ms
+<function uninformed_search at 0x0000021EAE67FB80> took 8.003 ms
+Total Route Distance (BFS):2235.292   Total Steps (BFS):15
+Total Route Distance (DFS):34256.70000000002   Total Steps (DFS):240
+Total Route Distance (Random-Depth):14919.13199999999   Total Steps (Uninformed):133
+
+Results for destination point: (36.301605,-82.337822)
+--------------------------
+
+
+<function breadth_first_search at 0x0000021EAE67FCA0> took 33.995 ms
+<function depth_first_search at 0x0000021EAE67FDC0> took 442.995 ms
+<function uninformed_search at 0x0000021EAE67FB80> took 219.012 ms
+Total Route Distance (BFS):3265.7579999999994   Total Steps (BFS):14
+Total Route Distance (DFS):66881.21399999999   Total Steps (DFS):460
+Total Route Distance (Random-Depth):42343.566999999995   Total Steps (Uninformed):303
+
+Results for destination point: (36.347904,-82.400772)
+--------------------------
+
+
+<function breadth_first_search at 0x0000021EAE67FCA0> took 1015.005 ms
+<function depth_first_search at 0x0000021EAE67FDC0> took 10.984 ms
+<function uninformed_search at 0x0000021EAE67FB80> took 16.000 ms
+Total Route Distance (BFS):7448.816000000002   Total Steps (BFS):39
+Total Route Distance (DFS):25413.508   Total Steps (DFS):148
+Total Route Distance (Random-Depth):30317.922000000002   Total Steps (Uninformed):209
