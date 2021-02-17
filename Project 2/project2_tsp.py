@@ -10,6 +10,8 @@ import operator
 import math
 import pandas
 import matplotlib.pyplot as plt
+from collections import deque
+
 
 ## -- Set up the initial map area and save it as a networkx graph
 ox.config(log_console=True, use_cache=True)
@@ -39,6 +41,37 @@ generations = []            # A list of populations, ultimately of size GENERATI
 population = []             # The current population of size POPULATION_SIZE
 chromosome = []             # Represented as a list of index values that correspond to the points list
 
+# Borrowed from project 1
+def breadth_first_search(graph, origin, destination):
+    '''
+    Accepts the graph and the origin and destination points
+    Returns the result of backtracking through the explored list when the
+     destination is found.
+    '''
+    print("Breadth First Search")
+
+    frontier = deque()
+    explored = []
+    searching = True
+
+    frontier.appendleft((origin[0], None))
+
+    while searching:
+        if len(frontier) == 0:
+            return -1
+
+        frontier_node = frontier.pop()
+        current_node = frontier_node[0]
+        previous_node = frontier_node[1]
+
+        if previous_node is not None:
+            explored.append((current_node, previous_node))
+        for neighbor in graph.neighbors(current_node):
+            if (neighbor, current_node) not in frontier and (neighbor, current_node) not in explored:
+                if neighbor == destination[0]:
+                    searching = False
+                    break    #Success
+                frontier.appendleft((neighbor, current_node))
 
 def plot_path(lat, long, origin_point, destination_point, fitness):
     """
