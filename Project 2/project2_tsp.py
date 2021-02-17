@@ -146,9 +146,13 @@ def initialize_population():
     """
     my_population = []
 
+    # Loop through creating chromosomes until we fill the population
     for chromosome in range(0, POPULATION_SIZE):
-        path = random.shuffle(points)
-        my_population.append(path, calculate_fitness(path))     
+        # Shuffle the list of points and calculate the fitness of the path which returns the [chromosme,fitness] ready to be added to the population
+        my_population.append(calculate_fitness(random.shuffle(points)))     
+
+    # Sort the population by fitness
+    my_population.sort(key=lambda x: x[1])
 
     generations.append(my_population)
 
