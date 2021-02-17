@@ -11,7 +11,7 @@ import math
 import pandas
 import matplotlib.pyplot as plt
 from collections import deque
-
+from copy import deepcopy
 
 ## -- Set up the initial map area and save it as a networkx graph
 ox.config(log_console=True, use_cache=True)
@@ -163,7 +163,7 @@ def repopulate(gen):
 
     generations.append(my_population)
 
-
+# Adopted and modified from Genetic Search Algorithm lab
 # Set rand to True to divert typical functionality and choose parents completely at random
 def selection(gen, rand=False):
     '''
@@ -214,13 +214,62 @@ def crossover(p1,p2):
 
     return child
 
+# Set crossover_strategy to "singlepoint"/"multipoint" to divert from typical behavior and instead perform a singlepoint/multipoint reproduction strategy
+def crossover(self, parent1, parent2, crossover_strategy="uniform"):
+    '''
+    Parameters
+    ----------
+    parent1 : list of int
+        A chromosome that lists the steps to take
+    parent2 : list of int
+        A chromosome that lists the steps to take
+
+    Returns
+    -------
+    list in the form [chromosome,fitness]
+        The child chromosome and its fitness value
+
+    '''
+    # Initialization
+    child = []
+    if crossover_strategy == "singlepoint":
+        # Randomly choose a split point
+        split_point = self.chromosome_size - random.randint(0, self.chromosome_size)
+        child = parent1[:split_point] + parent2[split_point:]
+    elif crossover_strategy == "multipoint":
+        points = []
+        while len(points) < 2: 
+            split_point = self.chromosome_size - random.randint(0, self.chromosome_size) 
+            if split_point not in points:
+                points.append(split_point)
+        points.sort()
+        child = parent1[:points[0]] + parent2[points[0]:points[1]] + parent1[points[1]:]
+    else:
+        # Step through each item in the chromosome and randomly choose which
+        #  parent's genetic material to select
+        for i in range(self.chromosome_size):
+            bit = None
+            if random.randint(0,1) == 0:
+                bit = parent1[i]
+            else:
+                bit = parent2[i]
+            child.append(bit)
+
+    return [child, self.fitness(child)]
+
 
 def mutate(chromosome):
     """
     Strategy: swap two pairs of points. Return the chromosome after mutation.
     """
-    mutant_child = []
-    return mutant_child
+    # Copy the child
+    mutant_child = deepcopy(chromosome)
+    # Select two random points
+    point1, point2 = random.sample(range(len(mutant_child)), 2)
+    #Swap the points
+    mutant_child[point1], mutant_child[point2] = mutant_child[point2], mutant_child[point1]
+    
+    return [mutant_child,calculate_fitness(mutant_child)]
 
 
 def run_ga():
@@ -233,7 +282,6 @@ def run_ga():
         repopulate(gen+1)
         if gen % DISPLAY_RATE == 0:
             print("Generation Stuff") # Print the generation, and the best (lowest) fitness score in the population for that generation
-
 
 def show_route(generation_number):
     """
