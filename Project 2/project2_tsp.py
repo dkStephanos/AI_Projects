@@ -147,7 +147,8 @@ def initialize_population():
     my_population = []
 
     for chromosome in range(0, POPULATION_SIZE):
-       pass     
+        path = random.shuffle(points)
+        my_population.append(path, calculate_fitness(path))     
 
     generations.append(my_population)
 
@@ -274,6 +275,8 @@ def run_ga():
         repopulate(gen+1)
         if gen % DISPLAY_RATE == 0:
             print("Generation Stuff") # Print the generation, and the best (lowest) fitness score in the population for that generation
+            print(gen)
+            print(gen[0])
 
 def show_route(generation_number):
     """
