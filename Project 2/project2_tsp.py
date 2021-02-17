@@ -205,17 +205,8 @@ def selection(gen, rand=False):
 
     return parent1, parent2
 
-
-def crossover(p1,p2):
-    """
-    Strategy: ...
-    """
-    child = []
-
-    return child
-
 # Set crossover_strategy to "singlepoint"/"multipoint" to divert from typical behavior and instead perform a singlepoint/multipoint reproduction strategy
-def crossover(self, parent1, parent2, crossover_strategy="uniform"):
+def crossover(parent1, parent2, crossover_strategy="uniform"):
     '''
     Parameters
     ----------
@@ -232,14 +223,15 @@ def crossover(self, parent1, parent2, crossover_strategy="uniform"):
     '''
     # Initialization
     child = []
+    chromosome_size = len(parent1)
     if crossover_strategy == "singlepoint":
         # Randomly choose a split point
-        split_point = self.chromosome_size - random.randint(0, self.chromosome_size)
+        split_point = chromosome_size - random.randint(0, chromosome_size)
         child = parent1[:split_point] + parent2[split_point:]
     elif crossover_strategy == "multipoint":
         points = []
         while len(points) < 2: 
-            split_point = self.chromosome_size - random.randint(0, self.chromosome_size) 
+            split_point = chromosome_size - random.randint(0, chromosome_size) 
             if split_point not in points:
                 points.append(split_point)
         points.sort()
@@ -247,7 +239,7 @@ def crossover(self, parent1, parent2, crossover_strategy="uniform"):
     else:
         # Step through each item in the chromosome and randomly choose which
         #  parent's genetic material to select
-        for i in range(self.chromosome_size):
+        for i in range(0, chromosome_size):
             bit = None
             if random.randint(0,1) == 0:
                 bit = parent1[i]
@@ -255,7 +247,7 @@ def crossover(self, parent1, parent2, crossover_strategy="uniform"):
                 bit = parent2[i]
             child.append(bit)
 
-    return [child, self.fitness(child)]
+    return [child, calculate_fitness(child)]
 
 
 def mutate(chromosome):
@@ -269,7 +261,7 @@ def mutate(chromosome):
     #Swap the points
     mutant_child[point1], mutant_child[point2] = mutant_child[point2], mutant_child[point1]
     
-    return [mutant_child,calculate_fitness(mutant_child)]
+    return [mutant_child, calculate_fitness(mutant_child)]
 
 
 def run_ga():
