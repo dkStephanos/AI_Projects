@@ -41,38 +41,6 @@ generations = []            # A list of populations, ultimately of size GENERATI
 population = []             # The current population of size POPULATION_SIZE
 chromosome = []             # Represented as a list of index values that correspond to the points list
 
-# Borrowed from project 1
-def breadth_first_search(graph, origin, destination):
-    '''
-    Accepts the graph and the origin and destination points
-    Returns the result of backtracking through the explored list when the
-     destination is found.
-    '''
-    print("Breadth First Search")
-
-    frontier = deque()
-    explored = []
-    searching = True
-
-    frontier.appendleft((origin[0], None))
-
-    while searching:
-        if len(frontier) == 0:
-            return -1
-
-        frontier_node = frontier.pop()
-        current_node = frontier_node[0]
-        previous_node = frontier_node[1]
-
-        if previous_node is not None:
-            explored.append((current_node, previous_node))
-        for neighbor in graph.neighbors(current_node):
-            if (neighbor, current_node) not in frontier and (neighbor, current_node) not in explored:
-                if neighbor == destination[0]:
-                    searching = False
-                    break    #Success
-                frontier.appendleft((neighbor, current_node))
-
 def plot_path(lat, long, origin_point, destination_point, fitness):
     """
     SOURCE: Modified from Priyam, Apurv (2020). https://towardsdatascience.com/find-and-plot-your-optimal-path-using-plotly-and-networkx-in-python-17e75387b873
@@ -178,6 +146,9 @@ def initialize_population():
     """
     my_population = []
 
+    for chromosome in range(0, POPULATION_SIZE):
+       pass     
+
     generations.append(my_population)
 
 
@@ -193,11 +164,45 @@ def repopulate(gen):
     generations.append(my_population)
 
 
-def selection(gen):
-    """
-    Choose two parents and return their chromosomes
-    """
-    parent1, parent2 = None, None
+# Set rand to True to divert typical functionality and choose parents completely at random
+def selection(gen, rand=False):
+    '''
+    Selects parents from the given population, assuming that the population is
+    sorted from best to worst fitness.
+
+    Parameters
+    ----------
+    population : list of lists
+        Each item in the population is in the form [chromosome,fitness]
+
+    Returns
+    -------
+    parent1 : list of int
+        The chromosome chosen as parent1
+    parent2 : list of int
+        The chromosome chosen as parent2
+
+    '''
+    # Set the elitism factor and calculate the max index
+    if rand == False:
+        factor = 0.5	# Select from top 50%
+        high = math.ceil(POPULATION_SIZE*factor)
+    else:
+        high = POPULATION_SIZE - 1
+
+    # Choose parents randomly
+    parent1 = gen[random.randint(0,high)][0]
+    parent2 = gen[random.randint(0,high)][0]
+
+    # If the same parent is chosen, pick another
+    # we can get stuck here if we converge early, if we pick the same parent ten times in a row, just bail out
+    count = 0
+    while str(parent1) == str(parent2):
+        parent2 = gen[random.randint(0,high)][0]
+        count += 1
+        if count == 10:
+            break
+
     return parent1, parent2
 
 
