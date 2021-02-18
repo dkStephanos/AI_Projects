@@ -134,6 +134,11 @@ def calculate_fitness(chromosome):
     The GA should attempt to minimize the fitness; minimal fitness => best fitness
     """
     fitness = 0.0
+    
+    for point in range(len(chromosome) - 1):
+        fitness += haversine(chromosome[point], chromosome[point + 1])
+
+
     return [chromosome,fitness]
 
 
