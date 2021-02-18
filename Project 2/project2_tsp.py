@@ -23,10 +23,10 @@ G = ox.graph_from_address('1276 Gilbreath Drive, Johnson City, Washington County
 # plt.show()
 
 ## -- Genetic Algorithm Parameters
-GENERATIONS = 1000
+GENERATIONS = 100
 POPULATION_SIZE = 200
 MUTATION_RATE = 0.1
-DISPLAY_RATE = 100
+DISPLAY_RATE = 20
 
 ## -- Set up Origin and Destination Points
 origin_point = (36.3044549, -82.3632187) # Start at ETSU
@@ -126,7 +126,7 @@ def haversine(point1, point2):
     """
     Returns the Great Circle Distance between point 1 and point 2 in miles
     """
-    return ox.distance.great_circle_vec(G.nodes[point1]['y'], G.nodes[point1]['x'], G.nodes[point2]['y'], G.nodes[point2]['x'], 3963.1906)
+    return ox.distance.great_circle_vec(point1['y'], point1['x'], point2['y'], point2['x'], 3963.1906)
 
 
 def calculate_fitness(chromosome):
@@ -137,7 +137,7 @@ def calculate_fitness(chromosome):
     fitness = 0.0
     
     for point in range(len(chromosome) - 1):
-        fitness += haversine(chromosome[point], chromosome[point + 1])
+        fitness += haversine(chromosome[point][1], chromosome[point + 1][1])
 
 
     return [chromosome,fitness]
@@ -155,7 +155,7 @@ def initialize_population():
     # Loop through creating chromosomes until we fill the population
     for chromosome in range(0, POPULATION_SIZE):
         # Shuffle the list of points and calculate the fitness of the path which returns the [chromosme,fitness] ready to be added to the population
-        my_population.append(calculate_fitness(random.shuffle(points)))     
+        my_population.append(calculate_fitness(random.sample(points, len(points))))     
 
     # Sort the population by fitness
     my_population.sort(key=lambda x: x[1])
@@ -172,20 +172,18 @@ def repopulate(gen):
     """
     ## Ensure you keep the best of the best from the previous generation
     retain = math.ceil(POPULATION_SIZE*0.025)
-    new_population = gen[:retain]
+    new_population = generations[gen-1][:retain]
 
     ## Conduct selection, reproduction, and mutation operations to fill the rest of the population
     while len(new_population) < POPULATION_SIZE:
         parent1, parent2 = selection(gen)
 
-        child = cross(parent1, parent2, "multipoint")
+        child = crossover(parent1, parent2, "multipoint")
 
         if (random.random() < MUTATION_RATE):
             child = mutate(child[0])
             
         new_population.append(child)
-
-    parent1, parent2 = selection(gen)
 
     # Sort the population by fitness
     new_population.sort(key=lambda x: x[1])
@@ -220,14 +218,14 @@ def selection(gen, rand=False):
         high = POPULATION_SIZE - 1
 
     # Choose parents randomly
-    parent1 = gen[random.randint(0,high)][0]
-    parent2 = gen[random.randint(0,high)][0]
+    parent1 = generations[gen-1][random.randint(0,high)][0]
+    parent2 = generations[gen-1][random.randint(0,high)][0]
 
     # If the same parent is chosen, pick another
     # we can get stuck here if we converge early, if we pick the same parent ten times in a row, just bail out
     count = 0
     while str(parent1) == str(parent2):
-        parent2 = gen[random.randint(0,high)][0]
+        parent2 = generations[gen-1][random.randint(0,high)][0]
         count += 1
         if count == 10:
             break
@@ -276,7 +274,7 @@ def crossover(parent1, parent2, crossover_strategy="uniform"):
                 bit = parent2[i]
             child.append(bit)
 
-    return [child, calculate_fitness(child)]
+    return calculate_fitness(child)
 
 
 def mutate(chromosome):
@@ -290,7 +288,7 @@ def mutate(chromosome):
     #Swap the points
     mutant_child[point1], mutant_child[point2] = mutant_child[point2], mutant_child[point1]
     
-    return [mutant_child, calculate_fitness(mutant_child)]
+    return calculate_fitness(mutant_child)
 
 
 def run_ga():
@@ -302,9 +300,10 @@ def run_ga():
     for gen in range(GENERATIONS-1):      #Note, you already ran generation 1
         repopulate(gen+1)
         if gen % DISPLAY_RATE == 0:
-            print("Generation Stuff") # Print the generation, and the best (lowest) fitness score in the population for that generation
-            print(gen)
-            print(gen[0])
+            print("Best Geneartion:") # Print the generation, and the best (lowest) fitness score in the population for that generation
+            print(generations[gen])
+            print("Fitness Score")
+            print(generations[gen][0][1])
 
 def show_route(generation_number):
     """
@@ -354,7 +353,7 @@ def main():
     #show_route(math.floor(GENERATIONS/2))
     #show_route(GENERATIONS-1)
 
-    #plot_ga()
+    plot_ga()
 
 
 main()
