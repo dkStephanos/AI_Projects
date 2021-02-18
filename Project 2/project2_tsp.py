@@ -121,14 +121,14 @@ def plot_ga():
 
 
 
-
+# Modified to take in actual points, not ids, no need to perform look up twice
 def haversine(point1, point2):
     """
     Returns the Great Circle Distance between point 1 and point 2 in miles
     """
     return ox.distance.great_circle_vec(point1['y'], point1['x'], point2['y'], point2['x'], 3963.1906)
 
-
+# Returns a list containing chromosome,fitness ready to be inserted into a population
 def calculate_fitness(chromosome):
     """
     Fitness is the total route cost using the haversine distance.
@@ -162,8 +162,8 @@ def initialize_population():
 
     generations.append(my_population)
 
-
-def repopulate(gen):
+# Takes the index to the generation to repopulate from, and a crossover strategy (accepts: uniform, singlepoint, multipoint)
+def repopulate(gen, crossover_strategy, random_selection=False):
     """
     Creates a new generation by repopulation based on the previous generation.
     Calls selection, crossover, and mutate to create a child chromosome. Calculates fitness
@@ -176,10 +176,11 @@ def repopulate(gen):
 
     ## Conduct selection, reproduction, and mutation operations to fill the rest of the population
     while len(new_population) < POPULATION_SIZE:
-        parent1, parent2 = selection(gen)
-
-        child = crossover(parent1, parent2, "multipoint")
-
+        # Select the two parents from the growing population
+        parent1, parent2 = selection(gen, random_selection)
+        # Generate the child according to the designated crossover_strategy
+        child = crossover(parent1, parent2, crossover_strategy)
+        # Generate a random number, if it falls beneath the mutation_rate, perform a point swap mutation on the child
         if (random.random() < MUTATION_RATE):
             child = mutate(child[0])
             
@@ -232,6 +233,7 @@ def selection(gen, rand=False):
 
     return parent1, parent2
 
+# Adopted and modified from Genetic Search Algorithm lab
 # Set crossover_strategy to "singlepoint"/"multipoint" to divert from typical behavior and instead perform a singlepoint/multipoint reproduction strategy
 def crossover(parent1, parent2, crossover_strategy="uniform"):
     '''
@@ -290,15 +292,15 @@ def mutate(chromosome):
     
     return calculate_fitness(mutant_child)
 
-
-def run_ga():
+# Modified to rake a crossover strategy and random_selection flag (defaulted to False)
+def run_ga(crossover_strategy, random_selection=False):
     """
     Initialize and repopulate until you have reached the maximum generations
     """
     initialize_population()
 
     for gen in range(GENERATIONS-1):      #Note, you already ran generation 1
-        repopulate(gen+1)
+        repopulate(gen+1, crossover_strategy, random_selection)
         if gen % DISPLAY_RATE == 0:
             print("Best Geneartion:") # Print the generation, and the best (lowest) fitness score in the population for that generation
             print(generations[gen])
@@ -348,7 +350,7 @@ def main():
 
     print("There were",len(points),"unique points found.")
 
-    run_ga()
+    run_ga(crossover_strategy="multipoint", random_selection=False)
     #show_route(0)
     #show_route(math.floor(GENERATIONS/2))
     #show_route(GENERATIONS-1)
