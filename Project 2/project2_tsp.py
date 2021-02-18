@@ -1,4 +1,5 @@
 import networkx as nx
+from numpy.core.numeric import cross
 import osmnx as ox
 from osmnx import distance as distance
 import plotly.graph_objects as go
@@ -169,9 +170,27 @@ def repopulate(gen):
     and continues until the population is full. Sorts the population by fitness
     and adds it to the generations list.
     """
-    my_population = []
+    ## Ensure you keep the best of the best from the previous generation
+    retain = math.ceil(POPULATION_SIZE*0.025)
+    new_population = gen[:retain]
 
-    generations.append(my_population)
+    ## Conduct selection, reproduction, and mutation operations to fill the rest of the population
+    while len(new_population) < POPULATION_SIZE:
+        parent1, parent2 = selection(gen)
+
+        child = cross(parent1, parent2, "multipoint")
+
+        if (random.random() < MUTATION_RATE):
+            child = mutate(child[0])
+            
+        new_population.append(child)
+
+    parent1, parent2 = selection(gen)
+
+    # Sort the population by fitness
+    new_population.sort(key=lambda x: x[1])
+
+    generations.append(new_population)
 
 # Adopted and modified from Genetic Search Algorithm lab
 # Set rand to True to divert typical functionality and choose parents completely at random
