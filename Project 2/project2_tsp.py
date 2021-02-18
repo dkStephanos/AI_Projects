@@ -101,8 +101,8 @@ def plot_path(lat, long, origin_point, destination_point, fitness):
                           'zoom': 12})
     fig.show()
 
-
-def plot_ga():
+# Modified to take a crossover strategy and gensave the image instead of display it, and return the data dict
+def plot_ga(crossover_strategy):
     generation_values = []
     best = []
     worst = []
@@ -114,12 +114,23 @@ def plot_ga():
         worst.append(worst_route[1])
         generation_values.append(gen)
         gen = gen+1
-    data = { 'Generations':generation_values, 'Best':best,'Worst':worst }
+    temp_data = {'Best':best,'Worst':worst }
+    df = pandas.DataFrame(temp_data)
+    plot = df.plot(title=f"Fitness Across Generations: {crossover_strategy} crossover", xlabel="Generatons", ylabel="Fitness")
+    plot.figure.savefig(f"FitnessAcrossGenerations_{crossover_strategy}-crossover.png")
+    plt.clf()
+
+    return temp_data
+
+# Takes a data dict indexed by strategy name containing data from algorithm runs and creates a line plot comparing the best runs from each, saving as a png
+def plot_bests(data):
+    best_data = {}
+    for strategy, results in data.items():
+        best_data[strategy] = results['Best']
+
     df = pandas.DataFrame(data)
-    fig = px.line(df, x="Generations", y=["Best","Worst"], title="Fitness Across Generations")
-    fig.show()
-
-
+    fig = px.line(df, x="Generations", y=data.keys(), title="Fitness Across Generations: Best From Each Strategy")
+    fig.write_image("Fitness Across Generations: Best From Each Strategy")    
 
 # Modified to take in actual points, not ids, no need to perform look up twice
 def haversine(point1, point2):
@@ -350,12 +361,22 @@ def main():
 
     print("There were",len(points),"unique points found.")
 
-    run_ga(crossover_strategy="multipoint", random_selection=False)
-    #show_route(0)
-    #show_route(math.floor(GENERATIONS/2))
-    #show_route(GENERATIONS-1)
+    strategies = ['uniform', 'singlepoint', 'multipoint']
+    data = {}
 
-    plot_ga()
+    for current_strategy in strategies:
+        run_ga(crossover_strategy=current_strategy, random_selection=False)
+        #show_route(0)
+        #show_route(math.floor(GENERATIONS/2))
+        #show_route(GENERATIONS-1)
 
+        temp_data = plot_ga(current_strategy)
+        data[f"{current_strategy}-Best"] = temp_data['Best']
+        # reset
+        generations.clear()
+
+    df = pandas.DataFrame(data)
+    plot = df.plot(title="Comparing Best Runs Accross Crossover Strategies", xlabel="Generatons", ylabel="Fitness")
+    plot.figure.savefig("Comparing-Best-Runs-Accross-Crossover-Strategies.png")
 
 main()
