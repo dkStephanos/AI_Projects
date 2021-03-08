@@ -1,0 +1,25 @@
+Name,Gender,Hair Color,Bald,Hat,Eyes,Mustache,Beard,Glasses,Earrings
+Alex,Male,Black,False,False,Brown,True,False,False,False
+Alfred,Male,Red,False,False,Blue,True,False,False,False
+Anita,Female,White,False,False,Blue,False,False,False,False
+Anne,Female,Black,False,False,Brown,False,False,False,True
+Bernard,Male,Brown,False,True,Brown,False,False,False,False
+Bill,Male,Red,True,False,Brown,False,True,False,False
+Charles,Male,Blonde,False,False,Brown,True,False,False,False
+Claire,Female,Red,False,True,Brown,False,False,True,False
+David,Male,Blonde,False,False,Brown,False,True,False,False
+Eric,Male,Blonde,False,True,Brown,False,False,False,False
+Frans,Male,Red,False,False,Brown,False,False,False,False
+George,Male,White,False,True,Brown,False,False,False,False
+Herman,Male,Red,True,False,Brown,False,False,False,False
+Joe,Male,Blonde,False,False,Brown,False,False,True,False
+Maria,Female,Brown,False,True,Brown,False,False,False,True
+Max,Male,Black,False,False,Brown,True,False,False,False
+Paul,Male,White,False,False,Brown,False,False,True,False
+Peter,Male,White,False,False,Blue,False,False,False,False
+Philip,Male,Black,False,False,Brown,False,True,False,False
+Richard,Male,Brown,True,False,Brown,True,True,False,False
+Robert,Male,Red,False,False,Blue,False,False,False,False
+Sam,Male,White,True,False,Brown,False,False,True,False
+Susan,Female,Blonde,False,False,Brown,False,False,False,True
+Tom,Male,Black,True,False,Blue,False,False,True,False
