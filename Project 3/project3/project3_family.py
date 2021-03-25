@@ -5,6 +5,6 @@ from Relationships import Relationships
 def main():
     r = Relationships()
 
-    print(r.sibling("Alfred", "Bernard"))
+    print(r.nephew("Alfred", "Sam"))
 
 main()

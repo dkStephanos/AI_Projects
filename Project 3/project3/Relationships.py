@@ -28,6 +28,8 @@ class Relationships:
 
     def get_siblings(self, x):
         parents = self.get_parents(x)
+        if(len(parents) == 0):
+            return []
         return self.get_children(parents[0])
 
     def is_male(self, x):
@@ -105,4 +107,22 @@ class Relationships:
 
         return parents_x == parents_y and self.is_male(x)
 
-    
+    def niece(self,x,y):
+        parents = self.get_parents(x)
+
+        is_niece = False
+        for parent in parents:
+            if y in self.get_siblings(parent):
+                is_niece = True
+
+        return is_niece and self.is_female(x)
+
+    def nephew(self,x,y):
+        parents = self.get_parents(x)
+
+        is_nephew = False
+        for parent in parents:
+            if y in self.get_siblings(parent):
+                is_nephew = True
+
+        return is_nephew and self.is_male(x)
