@@ -65,6 +65,7 @@ class KnowledgeBase:
             Sets up the Character Dictionaries and adds them to the characters list.
             Reads from CSV file characters.csv
         """
+        self.characters = []
         with open('characters.csv', newline='') as csvfile:
             reader = csv.DictReader(csvfile)
             for character in reader:
