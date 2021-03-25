@@ -11,20 +11,24 @@ class Relationships:
             self.parents = d['parent']
 
     def get_parents(self, x):
-        children = []
-        for parent in self.parents:
-            if x in list(parent.keys()):
-                children.append(list(parent.values())[0])
-
-        return children
-
-    def get_children(self, x):
         parents = []
         for parent in self.parents:
-            if list(parent.values())[0] == x:
-                parents.append(list(parent.keys())[0])
-        
+            if x in list(parent.keys()):
+                parents.append(list(parent.values())[0])
+
         return parents
+
+    def get_children(self, x):
+        children = []
+        for parent in self.parents:
+            if list(parent.values())[0] == x:
+                children.append(list(parent.keys())[0])
+        
+        return children
+
+    def get_siblings(self, x):
+        parents = self.get_parents(x)
+        return self.get_children(parents[0])
 
     def is_male(self, x):
         for character in self.kb.characters:
@@ -100,3 +104,5 @@ class Relationships:
         parents_y = self.get_parents(y)
 
         return parents_x == parents_y and self.is_male(x)
+
+    
