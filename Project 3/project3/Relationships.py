@@ -88,3 +88,15 @@ class Relationships:
         parents_y = self.get_parents(y)
 
         return parents_x == parents_y
+
+    def sister(self,x,y):
+        parents_x = self.get_parents(x)
+        parents_y = self.get_parents(y)
+
+        return parents_x == parents_y and self.is_female(x)
+
+    def brother(self,x,y):
+        parents_x = self.get_parents(x)
+        parents_y = self.get_parents(y)
+
+        return parents_x == parents_y and self.is_male(x)
