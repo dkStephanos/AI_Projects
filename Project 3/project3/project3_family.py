@@ -6,6 +6,6 @@ def main():
     r = Relationships()
     print(r.father("Anita","Paul"))
 
-    print(r.get_children("Alex"))
+    print(r.grandfather("Frans", "Peter"))
 
 main()
