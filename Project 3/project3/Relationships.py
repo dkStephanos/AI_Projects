@@ -82,3 +82,9 @@ class Relationships:
         kids_y = self.get_children(y)
 
         return kids_x == kids_y
+
+    def sibling(self,x,y):
+        parents_x = self.get_parents(x)
+        parents_y = self.get_parents(y)
+
+        return parents_x == parents_y
