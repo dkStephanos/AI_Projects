@@ -13,7 +13,30 @@ class KnowledgeBase:
                                     in solving the problem.
             self.the_character - The random character to interrogate
         """
-        self.characters = []            # A list of all characters, initially (which are dictionaries)
+        self.characters = ['ALEX', 
+                           'ALFRED', 
+                           'ANITA', 
+                           'ANNE', 
+                           'BERNARD', 
+                           'BILL', 
+                           'CHARLES', 
+                           'CLAIRE', 
+                           'DAVID', 
+                           'ERIC', 
+                           'FRANS', 
+                           'GEORGE', 
+                           'HERMAN', 
+                           'JOE', 
+                           'MARIA', 
+                           'MAX', 
+                           'PAUL', 
+                           'PETER', 
+                           'PHILIP', 
+                           'RICHARD', 
+                           'ROBERT', 
+                           'SAM', 
+                           'SUSAN', 
+                           'TOM', ]            # A list of all characters, initially (which are dictionaries)
         self.characteristics = {
             'IS_MALE': ['ALEX', 'ALFRED', 'BERNARD', 'BILL', 'CHARLES', 'DAVID', 'ERIC', 'FRANS', 'GEORGE', 'HERMAN', 'JOE', 'MAX', 'PAUL', 'PETER', 'PHILIP', 'RICHARD', 'ROBERT', 'SAM', 'TOM',],
             'IS_FEMALE': ['ANITA', 'ANNE', 'CLAIRE', 'MARIA', 'SUSAN'],
@@ -33,7 +56,7 @@ class KnowledgeBase:
         }       # A dictionary of all known characteristics
 
         ##-- Read the characters and characteristics
-        self.read_characters()
+        #self.read_characters()
         self.guess_me = self.characters[random.randint(0, len(self.characters)-1)]
 
 
@@ -52,20 +75,34 @@ class KnowledgeBase:
         """
             Tell the KnowledgeBase a new piece of information.
         """
-        raise NotImplementedError()
+        # Guess me character has the characteristic, so purge all characters left that do not
+        if(value):
+            for character in self.characters:
+                if character not in self.characteristics[key]:
+                    self.characters.remove(character)
+        # Guess me character does not have the characteristic, so purge all charecters left that do, and drop the trait
+        else:
+            for character in self.characteristics[key]:
+                if character in self.characters:
+                    self.characters.remove(character)
+            del self.characteristics[key]
 
 
     def ask(self,key,value):
         """
             Queries the_character about a specific key, value pair
         """
-        raise NotImplementedError()
-        return True
+        if(value):
+            if self.guess_me in self.characteristics[key]:
+                return True
+        else:
+            if self.guess_me not in self.characteristics[key]:
+                return True
 
+        return False
 
     def ask_vars(self,key,value):
         """
             Returns the list of remaining characters that meet the key,value pair
         """
-        raise NotImplementedError()
-        return []
+        return self.characters
