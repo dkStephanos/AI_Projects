@@ -5,6 +5,6 @@ from Relationships import Relationships
 def main():
     r = Relationships()
 
-    print(r.nephew("Alfred", "Sam"))
+    print(r.great_grandmother("Anne", "Frans"))
 
 main()
