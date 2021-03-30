@@ -39,7 +39,7 @@ class Relationships:
         return x.upper() in self.kb.characteristics['IS_FEMALE']
 
     def parent(self,x,y):
-        return {x:y} in self.parents
+        return {y:x} in self.parents
 
 
     def father(self,x,y):
@@ -66,14 +66,16 @@ class Relationships:
         if len(kids) == 0:
             return False
 
+        great_grandkids = []
         for kid in kids:
             grandkids = self.get_children(kid)
             for grandkid in grandkids:
-                great_grandkids = self.get_children(grandkid)
-                if len(great_grandkids) == 0:
-                    return False
-                if y in great_grandkids:
-                    return True
+                great_grandkids += self.get_children(grandkid)
+        
+        if len(great_grandkids) == 0:
+            return False
+        if y in great_grandkids:
+            return True
 
         return False
 
@@ -93,28 +95,27 @@ class Relationships:
         kids_x = self.get_children(x)
         kids_y = self.get_children(y)
 
+        if len(kids_x) == 0 or len(kids_y) == 0 or x == y:
+            return False
+        
         return kids_x == kids_y
 
     def sibling(self,x,y):
         parents_x = self.get_parents(x)
         parents_y = self.get_parents(y)
 
-        return parents_x == parents_y
+        return parents_x == parents_y and x != y and len(parents_x) > 0 and len(parents_y) > 0
 
     def sister(self,x,y):
-        parents_x = self.get_parents(x)
-        parents_y = self.get_parents(y)
-
-        return parents_x == parents_y and self.is_female(x)
+        return self.sibling(x,y) and self.is_female(x)
 
     def brother(self,x,y):
-        parents_x = self.get_parents(x)
-        parents_y = self.get_parents(y)
-
-        return parents_x == parents_y and self.is_male(x)
+        return self.sibling(x,y) and self.is_male(x)
 
     def niece(self,x,y):
         parents = self.get_parents(x)
+        if y in parents:
+            return False
 
         is_niece = False
         for parent in parents:
@@ -125,6 +126,8 @@ class Relationships:
 
     def nephew(self,x,y):
         parents = self.get_parents(x)
+        if y in parents:
+            return False
 
         is_nephew = False
         for parent in parents:
@@ -134,6 +137,8 @@ class Relationships:
         return is_nephew and self.is_male(x)
 
     def cousin(self,x,y):
+        if x == y or self.sibling(x,y):
+            return False
         parents = self.get_parents(x)
         print(parents)
         parents_siblings = []
@@ -145,9 +150,8 @@ class Relationships:
             cousins += (self.get_children(sibling))
 
         is_cousin = False
-        print(cousins)
         for cousin in cousins:
             if cousin == y:
                 is_cousin = True
 
-        return is_cousin
+        return is_cousin 
