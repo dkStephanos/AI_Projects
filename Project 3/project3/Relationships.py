@@ -53,10 +53,7 @@ class Relationships:
     def mother(self,x,y):
          return self.parent(x,y) and self.is_female(x)
 
-    def grandfather(self,x,y):
-        if self.is_female(x):
-            return False
-        
+    def grandparent(self,x,y):
         kids = self.get_children(x)
         if len(kids) == 0:
             return False
@@ -67,59 +64,34 @@ class Relationships:
                 return True
 
         return False
+
+    def great_grandparent(self,x,y):
+        kids = self.get_children(x)
+        if len(kids) == 0:
+            return False
+
+        for kid in kids:
+            grandkids = self.get_children(kid)
+            for grandkid in grandkids:
+                great_grandkids = self.get_children(grandkid)
+                if len(great_grandkids) == 0:
+                    return False
+                if y in great_grandkids:
+                    return True
+
+        return False
+
+    def grandfather(self,x,y):
+        return self.is_male(x) and self.grandparent(x,y)
 
     def great_grandfather(self,x,y):
-        if self.is_female(x):
-            return False
-        
-        kids = self.get_children(x)
-        if len(kids) == 0:
-            return False
-
-        for kid in kids:
-            grandkids = self.get_children(kid)
-            for grandkid in grandkids:
-                great_grandkids = self.get_children(grandkid)
-                if len(great_grandkids) == 0:
-                    return False
-                if y in great_grandkids:
-                    return True
-
-        return False
+        return self.is_male(x) and self.great_grandparent(x,y)
 
     def grandmother(self,x,y):
-        if self.is_male(x):
-            return False
-        
-        kids = self.get_children(x)
-        if len(kids) == 0:
-            return False
-
-        for kid in kids:
-            grandkids = self.get_children(kid)
-            if y in grandkids:
-                return True
-
-        return False
+        return self.is_female(x) and self.grandparent(x,y)
 
     def great_grandmother(self,x,y):
-        if self.is_male(x):
-            return False
-        
-        kids = self.get_children(x)
-        if len(kids) == 0:
-            return False
-
-        for kid in kids:
-            grandkids = self.get_children(kid)
-            for grandkid in grandkids:
-                great_grandkids = self.get_children(grandkid)
-                if len(great_grandkids) == 0:
-                    return False
-                if y in great_grandkids:
-                    return True
-
-        return False
+        return self.is_female(x) and self.great_grandparent(x,y)
 
     def spouse(self,x,y):
         kids_x = self.get_children(x)
@@ -164,3 +136,20 @@ class Relationships:
                 is_nephew = True
 
         return is_nephew and self.is_male(x)
+
+    def cousin(self,x,y):
+        parents = self.get_parents(x)
+        parents_siblings = []
+        for parent in parents:
+            parents_siblings.concat(self.get_siblings(parent))
+
+        cousins = []
+        for sibling in parents_siblings:
+            cousins.concat(self.get_children(sibling))
+
+        is_cousin = False
+        for cousin in cousins:
+            if cousin == y:
+                is_cousin = True
+
+        return is_cousin
