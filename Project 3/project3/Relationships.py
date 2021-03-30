@@ -139,15 +139,17 @@ class Relationships:
 
     def cousin(self,x,y):
         parents = self.get_parents(x)
+        print(parents)
         parents_siblings = []
         for parent in parents:
-            parents_siblings.concat(self.get_siblings(parent))
-
+            parents_siblings += (self.get_siblings(parent))
+        print(parents_siblings)
         cousins = []
         for sibling in parents_siblings:
-            cousins.concat(self.get_children(sibling))
+            cousins += (self.get_children(sibling))
 
         is_cousin = False
+        print(cousins)
         for cousin in cousins:
             if cousin == y:
                 is_cousin = True
