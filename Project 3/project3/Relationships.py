@@ -140,11 +140,9 @@ class Relationships:
         if x == y or self.sibling(x,y):
             return False
         parents = self.get_parents(x)
-        print(parents)
         parents_siblings = []
         for parent in parents:
             parents_siblings += (self.get_siblings(parent))
-        print(parents_siblings)
         cousins = []
         for sibling in parents_siblings:
             cousins += (self.get_children(sibling))

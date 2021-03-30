@@ -25,6 +25,7 @@ def main():
     'Great-Grandfather': r.great_grandfather,
     }
 
+    '''
     with open("family-tree.csv", 'w') as csvFile:
         for character in kb.characters:
             for relationship in relationship_dispatch_tb.keys():
@@ -32,7 +33,7 @@ def main():
                     if(relationship_dispatch_tb[relationship](character.lower().capitalize(), char_to_test.lower().capitalize()) == True):
                         print(relationship, character, char_to_test)
                         csvFile.write(f'{relationship}, {character}, {char_to_test}\n')
-
+    '''
 
     while(True):
         print("Enter the name of the relationship you want to check: ")
