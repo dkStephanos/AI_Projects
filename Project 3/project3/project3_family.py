@@ -25,7 +25,13 @@ def main():
     'Great-Grandfather': r.great_grandfather,
     }
 
-    print(r.cousin('Philip', 'Tom'))
+    with open("family-tree.csv", 'w') as csvFile:
+        for character in kb.characters:
+            for relationship in relationship_dispatch_tb.keys():
+                for char_to_test in kb.characters:
+                    if(relationship_dispatch_tb[relationship](character.lower().capitalize(), char_to_test.lower().capitalize()) == True):
+                        print(relationship, character, char_to_test)
+                        csvFile.write(f'{relationship}, {character}, {char_to_test}\n')
 
 
     while(True):
@@ -39,7 +45,7 @@ def main():
                 personB = input()
 
                 if(personA.upper() in kb.characters and personB.upper() in kb.characters):
-                    print(relationship_dispatch_tb[relationship](personA, personB))
+                    print(relationship_dispatch_tb[relationship](personA.upper(), personB.upper()))
                 else:
                     print("Characters not found in KnowledgeBase base, try again. Here are the possible choices: ", kb.characters)
                 print("Press B to go back to relationship selection, E to exit, or any other character to run this relationship again: ")

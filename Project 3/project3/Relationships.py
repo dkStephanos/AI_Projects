@@ -33,14 +33,10 @@ class Relationships:
         return self.get_children(parents[0])
 
     def is_male(self, x):
-        for character in self.kb.characters:
-            if character['Name'] == x:
-                return character['Gender'] == 'Male'
+        return x.upper() in self.kb.characteristics['IS_MALE']
 
     def is_female(self, x):
-        for character in self.kb.characters:
-            if character['Name'] == x:
-                return character['Gender'] == 'Female'
+        return x.upper() in self.kb.characteristics['IS_FEMALE']
 
     def parent(self,x,y):
         return {x:y} in self.parents
