@@ -1,5 +1,5 @@
 from sklearn import naive_bayes
-from .SklearnClf import SklearnClf
+from SklearnClf import SklearnClf
 
 class GaussianNB(SklearnClf):
     def __init__(self,):
